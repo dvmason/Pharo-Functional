@@ -55,6 +55,22 @@ Symbol >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 ]
 
 { #category : #'*Pharo-Functional' }
+Symbol >> map: aCollection [
+	"#negated map: #(1 2 3)
+	>>> #(-1 -2 -3)
+	"
+	^ aCollection collect: self
+]
+
+{ #category : #'*Pharo-Functional' }
+Symbol >> map: aCollection map: anotherCollection [
+	"#+ map: #(1 2 3) map: #(-1 0 1)
+	>>> #(0 2 4)
+	"
+	^ aCollection with: anotherCollection collect: self
+]
+
+{ #category : #'*Pharo-Functional' }
 Symbol >> value: firstArg value: secondArg [
 	"(#+ value: 3 value: 2)
 	>>> 5

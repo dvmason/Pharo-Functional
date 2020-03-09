@@ -5,12 +5,17 @@ Class {
 		'first',
 		'second'
 	],
-	#category : #'Pharo-Functional'
+	#category : #'Pharo-Functional-Kernel'
 }
 
 { #category : #adding }
 ZippedCollection >> add: newObject [ 
 	^ self shouldNotImplement
+]
+
+{ #category : #accessing }
+ZippedCollection >> at: index [
+	^ { first at: index . second at: index }
 ]
 
 { #category : #enumerating }
@@ -34,4 +39,11 @@ ZippedCollection >> do: blockOrSymbol [
 { #category : #accessing }
 ZippedCollection >> size [
 	^ first size min: second size
+]
+
+{ #category : #initialization }
+ZippedCollection >> with: aCollection with: aCollection2 [ 
+	first := aCollection.
+	second := aCollection2.
+
 ]
