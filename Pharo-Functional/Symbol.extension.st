@@ -89,7 +89,7 @@ Symbol >> value: firstArg value: secondArg value: thirdArg value: fourthArg [
 ]
 
 { #category : #'*Pharo-Functional' }
-Symbol >> valueWithArguments: arguments [
-	arguments size = 2 ifTrue: [ ^ arguments first perform: self with: arguments last ].
-	^ arguments first perform: self withArguments: arguments allButFirst
+Symbol >> valueWithArguments: anArray [
+	anArray size = 2 ifTrue: [ ^ anArray first perform: self with: anArray last ].
+	^ anArray first perform: self withArguments: anArray allButFirst
 ]

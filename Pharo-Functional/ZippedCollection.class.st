@@ -1,3 +1,6 @@
+"
+I represent a collection from two collections.
+"
 Class {
 	#name : #ZippedCollection,
 	#superclass : #SequenceableCollection,
@@ -15,7 +18,7 @@ ZippedCollection >> add: newObject [
 
 { #category : #accessing }
 ZippedCollection >> at: index [
-	^ { first at: index . second at: index }
+	^ Pair with: (first at: index) with: (second at: index)
 ]
 
 { #category : #enumerating }
