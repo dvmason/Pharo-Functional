@@ -6,7 +6,7 @@ SequenceableCollection >> >==< other [
 ]
 
 { #category : #'*Pharo-Functional' }
-SequenceableCollection >> destructiure: aBlock [
+SequenceableCollection >> destructure: aBlock [
 	^ aBlock valueWithArguments: self
 ]
 
