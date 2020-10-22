@@ -13,6 +13,12 @@ Class {
 }
 
 { #category : #'instance creation' }
+Tuple class >> new: size [
+	size = 2 ifTrue: [ ^ Pair new: 2 ].
+	^ self new initializeWith: (Array new: size)
+]
+
+{ #category : #'instance creation' }
 Tuple class >> with: first [
 	^ self new initializeWith: {first}
 ]
@@ -27,8 +33,23 @@ Tuple class >> with: first with: second with: third [
 	^ self new initializeWith: {first. second. third}
 ]
 
+{ #category : #'instance creation' }
+Tuple class >> withAll: aCollection [
+	^ self new initializeWith: (aCollection collect: #yourself into: (Array new: aCollection size))
+]
+
 { #category : #adding }
 Tuple >> add: newObject [
+	self shouldNotImplement
+]
+
+{ #category : #adding }
+Tuple >> addFirst: newObject [
+	self shouldNotImplement
+]
+
+{ #category : #adding }
+Tuple >> addLast: newObject [
 	self shouldNotImplement
 ]
 
@@ -42,9 +63,20 @@ Tuple >> at: index put: unused [
 	^ self errorImproperStore
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 Tuple >> initializeWith: aCollection [
+	" this should only be used if we know the value is unreferenced anywhere "
 	value := aCollection.
+
+]
+
+{ #category : #accessing }
+Tuple >> replaceFrom: start to: stop with: source startingAt: repStart [
+	"This destructively replaces elements from start to stop in the receiver 
+	starting at index, repStart, in the sequenceable collection, 
+	source. Answer the receiver."
+
+	value replaceFrom: start to: stop with: source startingAt: repStart.
 
 ]
 

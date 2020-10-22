@@ -48,10 +48,11 @@ Pair >> replaceFrom: start to: stop with: source startingAt: repStart [
 	starting at index, repStart, in the sequenceable collection, 
 	source. Answer the receiver."
 
-	start = 1 ifFalse: [ ^ self errorImproperStore ].
-	stop = 2 ifFalse: [ ^ self errorImproperStore ].
-	value := source at: repStart.
-	other := source at: repStart+1.
+	start >= 1 ifFalse: [ ^ self errorImproperStore ].
+	stop <= 2 ifFalse: [ ^ self errorImproperStore ].
+	stop >= start ifFalse: [ ^ self errorImproperStore ].
+	start = 1 ifTrue: [ value := source at: repStart ].
+	stop > start ifTrue: [ other := source at: repStart+1 ].
 
 ]
 
