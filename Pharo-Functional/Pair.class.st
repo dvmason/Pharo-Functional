@@ -18,6 +18,20 @@ Pair class >> new: anInteger [
 	^ super new
 ]
 
+{ #category : #applying }
+Pair >> apply: aBlock [
+	^ aBlock argumentCount = 2 ifTrue: [
+				aBlock value: value value: other
+			] ifFalse: [
+				aBlock cull: self
+			]
+]
+
+{ #category : #applying }
+Pair >> applyTest: aBlock [
+	^ self apply: aBlock
+]
+
 { #category : #accessing }
 Pair >> at: index [
 	index = 1 ifTrue: [ ^ value ].

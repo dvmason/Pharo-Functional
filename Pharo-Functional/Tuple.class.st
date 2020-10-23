@@ -53,6 +53,21 @@ Tuple >> addLast: newObject [
 	self shouldNotImplement
 ]
 
+{ #category : #applying }
+Tuple >> apply: aBlock [
+	^ aBlock argumentCount = value size ifTrue: [
+				aBlock valueWithArguments: value
+			] ifFalse: [
+				aBlock cull: self
+			]
+
+]
+
+{ #category : #applying }
+Tuple >> applyTest: aBlock [
+	^ self apply: aBlock
+]
+
 { #category : #accessing }
 Tuple >> at: index [
 	^ value at: index
