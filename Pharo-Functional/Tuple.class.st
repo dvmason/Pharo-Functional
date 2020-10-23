@@ -63,11 +63,6 @@ Tuple >> apply: aBlock [
 
 ]
 
-{ #category : #applying }
-Tuple >> applyTest: aBlock [
-	^ self apply: aBlock
-]
-
 { #category : #accessing }
 Tuple >> at: index [
 	^ value at: index
