@@ -27,11 +27,6 @@ Pair >> apply: aBlock [
 			]
 ]
 
-{ #category : #applying }
-Pair >> applyTest: aBlock [
-	^ self apply: aBlock
-]
-
 { #category : #accessing }
 Pair >> at: index [
 	index = 1 ifTrue: [ ^ value ].
