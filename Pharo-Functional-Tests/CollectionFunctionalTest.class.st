@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #tests }
+CollectionFunctionalTest >> testGrouping [
+	self assert: 	(#(1 2 3 4 4 1 1) groupByRuns2Arg: [ :l :r | l = r]) equals: #((1) (2) (3) (4 4) (1 1)).
+	self assert: (#(1 2 3 4 1 2 3 3 4 5 1 ) groupByRuns2Arg: #<=) equals: #((1 2 3 4) (1 2 3 3 4 5) (1)).
+]
+
+{ #category : #tests }
 CollectionFunctionalTest >> testScan [
 	self assert: (#(1 2 3 4 5) scan: #+) equals: #(1 3 6 10 15).
 	self assert: (#(1 2 3 4 5) scan: #*) equals: #(1 2 6 24 120).

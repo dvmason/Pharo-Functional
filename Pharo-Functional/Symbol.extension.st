@@ -55,6 +55,11 @@ Symbol >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 ]
 
 { #category : #'*Pharo-Functional' }
+Symbol >> curry: anObject [
+	^ [: left |  left perform: self with: anObject ]
+]
+
+{ #category : #'*Pharo-Functional' }
 Symbol >> map: aCollection [
 	"#negated map: #(1 2 3)
 	>>> #(-1 -2 -3)
