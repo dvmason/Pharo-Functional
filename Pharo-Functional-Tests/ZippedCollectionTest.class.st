@@ -8,7 +8,7 @@ Class {
 		'zipped',
 		'zipped2'
 	],
-	#category : #'Pharo-Functional-Tests'
+	#category : #'Pharo-Functional-Tests-Tests'
 }
 
 { #category : #running }

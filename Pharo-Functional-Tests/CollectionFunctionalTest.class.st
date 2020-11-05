@@ -1,7 +1,7 @@
 Class {
 	#name : #CollectionFunctionalTest,
 	#superclass : #TestCase,
-	#category : #'Pharo-Functional-Tests'
+	#category : #'Pharo-Functional-Tests-Tests'
 }
 
 { #category : #tests }
