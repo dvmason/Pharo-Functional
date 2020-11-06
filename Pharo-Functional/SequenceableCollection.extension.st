@@ -11,6 +11,11 @@ SequenceableCollection >> destructure: aBlock [
 ]
 
 { #category : #'*Pharo-Functional' }
+SequenceableCollection >> frequencies [
+	^ self asBag valuesAndCounts.
+]
+
+{ #category : #'*Pharo-Functional' }
 SequenceableCollection >> groupByRuns2Arg: aBlock [
 	"Answer a new collection of the same species as the receiver with elements being collections (of the receiver species) containing those elements of the receiver for which the given block applied to 2 consecutive values evaluates to true."
 
@@ -34,6 +39,11 @@ SequenceableCollection >> groupByRuns2Arg: aBlock [
 	].
 	eStr isEmpty ifFalse: [ str nextPut: (eStr contents as: self species) ].
 	^ str contents as: self species
+]
+
+{ #category : #'*Pharo-Functional' }
+SequenceableCollection >> isUnique [
+	^ self frequencies values max <= 1.
 ]
 
 { #category : #'*Pharo-Functional' }

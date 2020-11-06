@@ -5,9 +5,24 @@ Class {
 }
 
 { #category : #tests }
+CollectionFunctionalTest >> testFrequencies [
+	self assert: (#(1 2 3 4 5) frequencies) equals: (Dictionary withAll: #(1 1 1 1 1)).
+	self assert: (#(1 2 3 4 4) frequencies) equals: (Dictionary withAll: #(1 1 1 2)).
+	self assert: (#(1 2 3)     frequencies) equals: (Dictionary withAll: #(1 1 1)).
+]
+
+{ #category : #tests }
 CollectionFunctionalTest >> testGrouping [
 	self assert: 	(#(1 2 3 4 4 1 1) groupByRuns2Arg: [ :l :r | l = r]) equals: #((1) (2) (3) (4 4) (1 1)).
 	self assert: (#(1 2 3 4 1 2 3 3 4 5 1 ) groupByRuns2Arg: #<=) equals: #((1 2 3 4) (1 2 3 3 4 5) (1)).
+]
+
+{ #category : #tests }
+CollectionFunctionalTest >> testIsUnique [
+	self assert: (#(1 2 3 4 5) isUnique) equals: true.
+	self assert: (#(1 2 3 4 4) isUnique) equals: false.
+	self assert: (#(1 2 3)     isUnique) equals: true.
+	self assert: (#(36 9 2 2)  isUnique) equals: false.
 ]
 
 { #category : #tests }
