@@ -1,6 +1,6 @@
 Extension { #name : #RBToken }
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*CompileWithCompose' }
 RBToken >> isPipe [
 	^ false
 ]

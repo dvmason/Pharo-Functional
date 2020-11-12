@@ -4,7 +4,7 @@ I subclass the OpalCompiler and add syntax recognition for a compose syntax: ':>
 Class {
 	#name : #ComposeCompiler,
 	#superclass : #OpalCompiler,
-	#category : #'Pharo-Functional-Compose'
+	#category : #'CompileWithCompose-Kernel'
 }
 
 { #category : #accessing }

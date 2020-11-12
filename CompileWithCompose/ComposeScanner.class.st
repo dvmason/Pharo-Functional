@@ -4,7 +4,7 @@ I subclass the RBScanner and add syntax recognition for a compose syntax: ':>'
 Class {
 	#name : #ComposeScanner,
 	#superclass : #RBScanner,
-	#category : #'Pharo-Functional-Compose'
+	#category : #'CompileWithCompose-Kernel'
 }
 
 { #category : #'private-scanning' }
