@@ -14,5 +14,11 @@ Class {
 { #category : #accessing }
 FunctionalParseExample >> foo [
 	" self new foo >>> 42 "
-	^ 17 negated :> min: -53 :> abs :> < 100 :> and: [ 4 > 2 ] :> and: [ 5 < 10 ] :> ifTrue: [ 42 ] ifFalse: [ 99 ]
+	^ 17 negated
+		:> min: -53
+		:> abs
+		:> < 100
+		:> and: [ 4 > 2 ]
+		:> and: [ 5 < 10 ]
+		:> ifTrue: [ 42 ] ifFalse: [ 99 ]
 ]
