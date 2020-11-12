@@ -9,6 +9,11 @@ ComposePipeToken >> isPipe [
 	^ true
 ]
 
+{ #category : #testing }
+ComposePipeToken >> isSpecial [
+	^ true
+]
+
 { #category : #accessing }
 ComposePipeToken >> length [
 	^ 2
