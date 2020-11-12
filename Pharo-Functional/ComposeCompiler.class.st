@@ -11,9 +11,3 @@ Class {
 ComposeCompiler >> compilationContext [
 	^ compilationContext ifNil: [ compilationContext := self compilationContextClass default parserClass: ComposeParser ]
 ]
-
-{ #category : #'public access' }
-ComposeCompiler >> compile [
-	self halt.
-	^ super compile
-]
