@@ -1,3 +1,6 @@
+"
+I subclass the RBParser and add syntax recognition for a compose syntax: ':>'
+"
 Class {
 	#name : #ComposeParser,
 	#superclass : #RBParser,

@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 ComposeCompiler >> compilationContext [
-	^ compilationContext ifNil: [ compilationContext := self compilationContextClass default parserClass: RBParser]
+	^ compilationContext ifNil: [ compilationContext := self compilationContextClass default parserClass: ComposeParser ]
 ]
 
 { #category : #'public access' }
