@@ -1,7 +1,7 @@
 Class {
 	#name : #ComposeScannerTest,
 	#superclass : #RBScannerTest,
-	#category : #'Pharo-Functional-Tests-Tests'
+	#category : #'CompileWithCompose-Tests'
 }
 
 { #category : #initialize }

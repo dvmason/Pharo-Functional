@@ -1,7 +1,7 @@
 Class {
 	#name : #ComposeParserTest,
 	#superclass : #RBParserTest,
-	#category : #'Pharo-Functional-Tests-Tests'
+	#category : #'CompileWithCompose-Tests'
 }
 
 { #category : #accessing }
