@@ -5,6 +5,18 @@ Class {
 }
 
 { #category : #tests }
+ChainMessagesTest >> testChain [
+	self assert: (
+	 17 chain negated
+		; min: -53
+		; abs
+		; < 100
+		; and: [ 4 > 2 ]
+		; and: [ 5 < 10 ]
+		; ifTrue: [ 42 ] ifFalse: [ 99 ]) equals: 42
+]
+
+{ #category : #tests }
 ChainMessagesTest >> testSimple [
 	self assert: (#('apple' 'peach' 'banana') chain
 	  groupedBy: #size;
