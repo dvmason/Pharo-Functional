@@ -10,7 +10,7 @@ Class {
 		'first',
 		'second'
 	],
-	#category : #'Pharo-Functional-Kernel'
+	#category : #'PharoFunctional-Kernel'
 }
 
 { #category : #'instance creation' }

@@ -1,21 +1,21 @@
 Extension { #name : #SequenceableCollection }
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> >==< other [
 	^ ZippedCollection new with: self with: other
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> destructure: aBlock [
 	^ aBlock valueWithArguments: self
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> frequencies [
 	^ self asBag valuesAndCounts.
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> groupByRuns2Arg: aBlock [
 	"Answer a new collection of the same species as the receiver with elements being collections (of the receiver species) containing those elements of the receiver for which the given block applied to 2 consecutive values evaluates to true."
 
@@ -41,12 +41,12 @@ SequenceableCollection >> groupByRuns2Arg: aBlock [
 	^ str contents as: self species
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> isUnique [
 	^ self frequencies values max <= 1.
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> zip: aCollection [ 
 	^ ZippedCollection new with: self with: aCollection
 ]

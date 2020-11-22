@@ -7,7 +7,7 @@ Class {
 	#name : #Tuple,
 	#superclass : #Array,
 	#type : #variable,
-	#category : #'Pharo-Functional-Kernel'
+	#category : #'PharoFunctional-Kernel'
 }
 
 { #category : #'instance creation' }

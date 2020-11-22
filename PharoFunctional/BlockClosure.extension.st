@@ -1,11 +1,11 @@
 Extension { #name : #BlockClosure }
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 BlockClosure >> curry: anObject [
 	^ [: left |  self value: left value: anObject ]
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 BlockClosure >> map: aCollection map: anotherCollection [
 	^ aCollection with: anotherCollection collect: self
 ]

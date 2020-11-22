@@ -1,11 +1,11 @@
 Extension { #name : #Symbol }
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> argumentCount [
 	^ self numArgs + 1
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> cull: firstArg cull: secondArg [
 	"Execute the receiver with one or two arguments depending on the receiver"
 	"(#negated cull: 13 cull: 12)
@@ -20,7 +20,7 @@ Symbol >> cull: firstArg cull: secondArg [
 	
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> cull: firstArg cull: secondArg cull: thirdArg [
 	"Execute the receiver with one or two arguments depending on the receiver"
 	"(#negated cull: 13 cull: 12 cull: 17)
@@ -37,7 +37,7 @@ Symbol >> cull: firstArg cull: secondArg cull: thirdArg [
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg]
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 	"Execute the receiver with one or two arguments depending on the receiver"
 	"(#negated cull: 13 cull: 12 cull: 17 cull:92)
@@ -54,12 +54,12 @@ Symbol >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg value: fourthArg]
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> curry: anObject [
 	^ [: left |  left perform: self with: anObject ]
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> map: aCollection [
 	"#negated map: #(1 2 3)
 	>>> #(-1 -2 -3)
@@ -67,7 +67,7 @@ Symbol >> map: aCollection [
 	^ aCollection collect: self
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> map: aCollection map: anotherCollection [
 	"#+ map: #(1 2 3) map: #(-1 0 1)
 	>>> #(0 2 4)
@@ -75,7 +75,7 @@ Symbol >> map: aCollection map: anotherCollection [
 	^ aCollection with: anotherCollection collect: self
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> value: firstArg value: secondArg [
 	"(#+ value: 3 value: 2)
 	>>> 5
@@ -83,17 +83,17 @@ Symbol >> value: firstArg value: secondArg [
 	^ firstArg perform: self with: secondArg
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> value: firstArg value: secondArg value: thirdArg [
 	^ firstArg perform: self with: secondArg with: thirdArg
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> value: firstArg value: secondArg value: thirdArg value: fourthArg [
 	^ firstArg perform: self with: secondArg with: thirdArg with: fourthArg
 ]
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Symbol >> valueWithArguments: anArray [
 	anArray size = 2 ifTrue: [ ^ anArray first perform: self with: anArray last ].
 	^ anArray first perform: self withArguments: anArray allButFirst

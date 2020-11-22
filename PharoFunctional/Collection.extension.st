@@ -1,6 +1,6 @@
 Extension { #name : #Collection }
 
-{ #category : #'*Pharo-Functional' }
+{ #category : #'*PharoFunctional' }
 Collection >> scan: aBlock [
 	| accumulator first |
 	first := true.

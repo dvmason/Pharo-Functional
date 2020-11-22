@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestPharoFunctionalTests,
 	#superclass : #PackageManifest,
-	#category : #'Pharo-Functional-Tests-Manifest'
+	#category : #'PharoFunctional-Tests-Manifest'
 }
 
 { #category : #'code-critics' }

@@ -4,7 +4,7 @@ Tests for the Pair class
 Class {
 	#name : #TupleTest,
 	#superclass : #TestCase,
-	#category : #'Pharo-Functional-Tests-Tests'
+	#category : #'PharoFunctional-Tests-Tests'
 }
 
 { #category : #tests }

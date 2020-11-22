@@ -8,7 +8,7 @@ Class {
 		'first',
 		'second'
 	],
-	#category : #'Pharo-Functional-Kernel'
+	#category : #'PharoFunctional-Kernel'
 }
 
 { #category : #adding }
@@ -24,7 +24,7 @@ ZippedCollection >> at: index [
 { #category : #enumerating }
 ZippedCollection >> collect: blockOrSymbol [
 	^ blockOrSymbol argumentCount = 1 ifTrue: [
-		first with: second collect: [:f :s | blockOrSymbol value: (Pair new initializeWith: f with: s)]
+		first with: second collect: [:f :s | blockOrSymbol value: (Pair with: f with: s)]
 	] ifFalse: [
 		first with: second collect: blockOrSymbol
 	]
@@ -33,7 +33,7 @@ ZippedCollection >> collect: blockOrSymbol [
 { #category : #enumerating }
 ZippedCollection >> do: blockOrSymbol [
 	^ blockOrSymbol argumentCount = 1 ifTrue: [
-		first with: second do: [:f :s | blockOrSymbol value: (Pair new initializeWith: f with: s)]
+		first with: second do: [:f :s | blockOrSymbol value: (Pair with: f with: s)]
 	] ifFalse: [
 		first with: second do: blockOrSymbol
 	]

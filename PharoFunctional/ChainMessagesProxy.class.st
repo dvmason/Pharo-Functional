@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'target'
 	],
-	#category : #'Pharo-Functional-Kernel'
+	#category : #'PharoFunctional-Kernel'
 }
 
 { #category : #'reflective operations' }
