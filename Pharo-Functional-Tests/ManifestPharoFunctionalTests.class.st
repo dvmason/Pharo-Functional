@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #'code-critics' }
+ManifestPharoFunctionalTests class >> ruleExtraBlockRuleV1FalsePositive [
+	^ #(#(#(#RGPackageDefinition #(#'Pharo-Functional-Tests')) #'2020-11-22T12:02:47.703658-05:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestPharoFunctionalTests class >> ruleLongMethodsRuleV1FalsePositive [
 	^ #(#(#(#RGClassDefinition #(#TupleTest)) #'2020-10-21T23:34:04.860994-04:00') )
 ]

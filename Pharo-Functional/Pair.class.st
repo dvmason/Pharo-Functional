@@ -5,9 +5,10 @@ I am mostly immutable, although I support replaceFrom:to:with:startingAt:
 "
 Class {
 	#name : #Pair,
-	#superclass : #Tuple,
+	#superclass : #ArrayedCollection,
 	#instVars : [
-		'other'
+		'first',
+		'second'
 	],
 	#category : #'Pharo-Functional-Kernel'
 }
@@ -15,13 +16,18 @@ Class {
 { #category : #'instance creation' }
 Pair class >> new: anInteger [
 	anInteger = 2 ifFalse: [ ^ Tuple new: anInteger ].
-	^ super new
+	^ self basicNew
+]
+
+{ #category : #'instance creation' }
+Pair class >> with: first with: second [
+	^ (self new: 2) initializeWith: first with: second
 ]
 
 { #category : #applying }
 Pair >> apply: aBlock [
 	^ aBlock argumentCount = 2 ifTrue: [
-				aBlock value: value value: other
+				aBlock value: first value: second
 			] ifFalse: [
 				aBlock cull: self
 			]
@@ -29,45 +35,41 @@ Pair >> apply: aBlock [
 
 { #category : #accessing }
 Pair >> at: index [
-	index = 1 ifTrue: [ ^ value ].
-	index = 2 ifTrue: [ ^ other ].
+	index = 1 ifTrue: [ ^ first ].
+	index = 2 ifTrue: [ ^ second ].
 	^ self errorSubscriptBounds: index
 ]
 
 { #category : #accessing }
+Pair >> at: index put: value [
+	^ self errorImproperStore
+]
+
+{ #category : #accessing }
 Pair >> first [
-	^ value
+	^ first
 ]
 
 { #category : #initialization }
 Pair >> initializeWith: anInteger with: anInteger2 [ 
-	value := anInteger.
-	other := anInteger2.
+	first := anInteger.
+	second := anInteger2.
 
 ]
 
 { #category : #accessing }
 Pair >> last [
-	^ other
+	^ second
 ]
 
 { #category : #accessing }
 Pair >> replaceFrom: start to: stop with: source startingAt: repStart [ 
-	"This destructively replaces elements from start to stop in the receiver 
-	starting at index, repStart, in the sequenceable collection, 
-	source. Answer the receiver."
-
-	start >= 1 ifFalse: [ ^ self errorImproperStore ].
-	stop <= 2 ifFalse: [ ^ self errorImproperStore ].
-	stop >= start ifFalse: [ ^ self errorImproperStore ].
-	start = 1 ifTrue: [ value := source at: repStart ].
-	stop > start ifTrue: [ other := source at: repStart+1 ].
-
+	^ self errorImproperStore
 ]
 
 { #category : #accessing }
 Pair >> second [
-	^ other
+	^ second
 ]
 
 { #category : #accessing }

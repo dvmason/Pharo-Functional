@@ -5,22 +5,20 @@ I am mostly immutable, although I support replaceFrom:to:with:startingAt:
 "
 Class {
 	#name : #Tuple,
-	#superclass : #SequenceableCollection,
-	#instVars : [
-		'value'
-	],
+	#superclass : #Array,
+	#type : #variable,
 	#category : #'Pharo-Functional-Kernel'
 }
 
 { #category : #'instance creation' }
 Tuple class >> new: size [
 	size = 2 ifTrue: [ ^ Pair new: 2 ].
-	^ self new initializeWith: (Array new: size)
+	^ super new: size
 ]
 
 { #category : #'instance creation' }
 Tuple class >> with: first [
-	^ self new initializeWith: {first}
+	^ (self new: 1) initializeWith: {first}
 ]
 
 { #category : #'instance creation' }
@@ -30,42 +28,17 @@ Tuple class >> with: first with: second [
 
 { #category : #'instance creation' }
 Tuple class >> with: first with: second with: third [
-	^ self new initializeWith: {first. second. third}
+	^ (self new: 3) initializeWith: {first. second. third}
 ]
 
 { #category : #'instance creation' }
 Tuple class >> withAll: aCollection [
-	^ self new initializeWith: (aCollection collect: #yourself into: (Array new: aCollection size))
+	^ (self new: aCollection size) initializeWith: (aCollection collect: #yourself into: (Array new: aCollection size))
 ]
 
 { #category : #adding }
 Tuple >> add: newObject [
 	self shouldNotImplement
-]
-
-{ #category : #adding }
-Tuple >> addFirst: newObject [
-	self shouldNotImplement
-]
-
-{ #category : #adding }
-Tuple >> addLast: newObject [
-	self shouldNotImplement
-]
-
-{ #category : #applying }
-Tuple >> apply: aBlock [
-	^ aBlock argumentCount = value size ifTrue: [
-				aBlock valueWithArguments: value
-			] ifFalse: [
-				aBlock cull: self
-			]
-
-]
-
-{ #category : #accessing }
-Tuple >> at: index [
-	^ value at: index
 ]
 
 { #category : #accessing }
@@ -76,21 +49,11 @@ Tuple >> at: index put: unused [
 { #category : #private }
 Tuple >> initializeWith: aCollection [
 	" this should only be used if we know the value is unreferenced anywhere "
-	value := aCollection.
+	aCollection withIndexDo: [: value : idx | super at: idx put: value].
 
 ]
 
 { #category : #accessing }
 Tuple >> replaceFrom: start to: stop with: source startingAt: repStart [
-	"This destructively replaces elements from start to stop in the receiver 
-	starting at index, repStart, in the sequenceable collection, 
-	source. Answer the receiver."
-
-	value replaceFrom: start to: stop with: source startingAt: repStart.
-
-]
-
-{ #category : #accessing }
-Tuple >> size [
-	^ value size
+	^ self errorImproperStore
 ]
