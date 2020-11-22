@@ -12,15 +12,15 @@ BaselineOfPharoFunctional >> baseline: spec [
 		do: [
 		"Packages"
 			spec
-				package: 'Pharo-Functional';
-				package: 'Pharo-Functional-Tests'  with: [ spec requires: #('Pharo-Functional') ];
+				package: 'PharoFunctional';
+				package: 'PharoFunctional-Tests'  with: [ spec requires: #('PharoFunctional') ];
 				package: 'CompileWithCompose';
 				package: 'CompileWithCompose-Tests'  with: [ spec requires: #('CompileWithCompose') ].
 		"Groups"
 			spec
-				group: 'default' with: #('Pharo-Functional' CompileWithCompose);
-				group: 'functional' with: #('Pharo-Functional');
+				group: 'default' with: #('PharoFunctional' CompileWithCompose);
+				group: 'functional' with: #('PharoFunctional');
 				group: 'compiler' with: #(CompileWithCompose);
-				group: 'All' with: #('Pharo-Functional' 'Pharo-Functional-Tests' 'CompileWithCompose' 'CompileWithCompose-Tests')
+				group: 'All' with: #('PharoFunctional' 'PharoFunctional-Tests' 'CompileWithCompose' 'CompileWithCompose-Tests')
 		]
 ]
