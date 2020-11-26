@@ -1,6 +1,11 @@
 Extension { #name : #Collection }
 
 { #category : #'*PharoFunctional' }
+Collection >> frequencies [
+	^ self asBag valuesAndCounts.
+]
+
+{ #category : #'*PharoFunctional' }
 Collection >> scan: aBlock [
 	| accumulator first |
 	first := true.

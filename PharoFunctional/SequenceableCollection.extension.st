@@ -11,11 +11,6 @@ SequenceableCollection >> destructure: aBlock [
 ]
 
 { #category : #'*PharoFunctional' }
-SequenceableCollection >> frequencies [
-	^ self asBag valuesAndCounts.
-]
-
-{ #category : #'*PharoFunctional' }
 SequenceableCollection >> groupByRuns2Arg: aBlock [
 	"Answer a new collection of the same species as the receiver with elements being collections (of the receiver species) containing those elements of the receiver for which the given block applied to 2 consecutive values evaluates to true."
 
