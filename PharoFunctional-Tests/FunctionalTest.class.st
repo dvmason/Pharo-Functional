@@ -5,6 +5,15 @@ Class {
 }
 
 { #category : #tests }
+FunctionalTest >> testCombinations [
+	self assert: (3 iota combinationsOf: 2) asSet equals: #((1 2) (1 3) (2 3)) asSet.
+	self assert: (3 iota combinationsOf: 2 select: [: each | each sum = 4]) equals: #((1 3)).
+	self assert: (3 iota combinationsOf: 2 select: [: each | each sum = 4] collect: [: each | each first]) equals: #(1).
+	self assert: (3 iota combinationsOf: 2 collect: [: each | each sum]) asSet equals: #(3 4 5) asSet.
+
+]
+
+{ #category : #tests }
 FunctionalTest >> testCurry [
 	self assert: ((5 curry: #-) value: 4) equals: 1.
 	self assert: ((#- curry: 4) value: 9) equals: 5.

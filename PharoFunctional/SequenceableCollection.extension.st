@@ -6,6 +6,29 @@ SequenceableCollection >> >==< other [
 ]
 
 { #category : #'*PharoFunctional' }
+SequenceableCollection >> combinationsOf: anInteger [ 
+	^ self combinationsOf: anInteger select: [: ignore | true ] collect: #yourself
+]
+
+{ #category : #'*PharoFunctional' }
+SequenceableCollection >> combinationsOf: anInteger collect: valueBlock [ 
+	^ self combinationsOf: anInteger select: [: ignore | true] collect: valueBlock
+]
+
+{ #category : #'*PharoFunctional' }
+SequenceableCollection >> combinationsOf: anInteger select: aFullBlockClosure [ 
+	^ self combinationsOf: anInteger select: aFullBlockClosure collect: #yourself
+]
+
+{ #category : #'*PharoFunctional' }
+SequenceableCollection >> combinationsOf: anInteger select: testBlock collect: valueBlock [
+	^ Array
+		streamContents: [ :stream | 
+			self combinations: anInteger atATimeDo: [ :combination |
+				(testBlock value: combination) ifTrue: [ stream nextPut: (valueBlock value: combination copy) ] ] ]
+]
+
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> destructure: aBlock [
 	^ aBlock valueWithArguments: self
 ]
