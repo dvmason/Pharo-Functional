@@ -93,5 +93,5 @@ SequenceableCollection >> zipFind: aCollection with: binaryBlock [
    " currently doesn't work if zipFind doesn't find a match"
    ^ self zip: aCollection
        :> select: [ :first : second | binaryBlock value: first value: second]
-       :> first.
+       :> emptyOrNilOr: #first.
 ]

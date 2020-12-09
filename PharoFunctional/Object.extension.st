@@ -14,3 +14,13 @@ Object >> chain [
 Object >> curry: aBlock [
 	^ [: right |  aBlock value: self value: right]
 ]
+
+{ #category : #'*PharoFunctional' }
+Object >> emptyOrNilOr: aBlock [
+	^ aBlock value: self
+]
+
+{ #category : #'*PharoFunctional' }
+Object >> nilOr: aBlock [
+	^ aBlock value: self
+]

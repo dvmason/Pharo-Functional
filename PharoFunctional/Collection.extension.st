@@ -1,6 +1,12 @@
 Extension { #name : #Collection }
 
 { #category : #'*PharoFunctional' }
+Collection >> emptyOrNilOr: aBlock [
+	self isEmpty ifTrue: [ ^ nil ].
+	^ aBlock value: self
+]
+
+{ #category : #'*PharoFunctional' }
 Collection >> frequencies [
 	^ self asBag valuesAndCounts.
 ]

@@ -7,6 +7,8 @@ Class {
 { #category : #tests }
 FunctionalTest >> testAdjacentFind [
 	self assert: (#(1 2 3 3 1 1 4) adjacentFind: #=) first equals: 3.
+	self assert: ((#(1 2 3) adjacentFind: #=) nilOr: #first) equals: nil.
+
 ]
 
 { #category : #tests }
