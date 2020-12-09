@@ -1,6 +1,11 @@
 Extension { #name : #Object }
 
 { #category : #'*PharoFunctional' }
+Object >> @@ aBlock [ 
+  ^ self curry: aBlock
+]
+
+{ #category : #'*PharoFunctional' }
 Object >> chain [
 	^ ChainMessagesProxy new initializeTargetValue: self
 ]
