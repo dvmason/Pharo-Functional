@@ -6,6 +6,11 @@ SequenceableCollection >> >==< other [
 ]
 
 { #category : #'*PharoFunctional' }
+SequenceableCollection >> adjacentFind: binaryBlock [
+	^ self zipFind: (self allButFirst) with: binaryBlock.
+]
+
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> combinationsOf: anInteger [ 
 	^ self combinationsOf: anInteger select: [: ignore | true ] collect: #yourself
 ]
@@ -65,6 +70,28 @@ SequenceableCollection >> isUnique [
 ]
 
 { #category : #'*PharoFunctional' }
+SequenceableCollection >> slide: width [
+   | start end result |
+   start   := 1.
+   end   := width.
+   result := self species ofSize: self size - width +1.
+   [ end > self size ] whileFalse: [
+	   result at: start put: (self copyFrom: start to: end).
+	   start := start + 1.
+	   end := end + 1.
+	].
+   ^ result   
+]
+
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> zip: aCollection [ 
 	^ ZippedCollection new with: self with: aCollection
+]
+
+{ #category : #'*PharoFunctional' }
+SequenceableCollection >> zipFind: aCollection with: binaryBlock [
+   " currently doesn't work if zipFind doesn't find a match"
+   ^ self zip: aCollection
+       :> select: [ :first : second | binaryBlock value: first value: second]
+       :> first.
 ]
