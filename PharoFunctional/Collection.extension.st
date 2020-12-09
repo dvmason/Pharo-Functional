@@ -23,6 +23,21 @@ Collection >> scan: aBlock [
 ]
 
 { #category : #'*PharoFunctional' }
+Collection >> slide: anInteger [ 
+   | a b res |
+   a   := 1.
+   b   := anInteger.
+   res := OrderedCollection new.
+   [ b > self size ] whileFalse: [
+	   res add: (self copyFrom: a to: b).
+	   a := a + 1.
+	   b := b + 1.
+	].
+   ^ res.
+   
+]
+
+{ #category : #'*PharoFunctional' }
 Collection >> zipFind: aCollection with: binaryBlock [
    " currently doesn't work if zipFind doesn't find a match"
    ^ self zip: aCollection 
