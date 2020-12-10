@@ -11,6 +11,11 @@ Class {
 	#category : #'PharoFunctional-Kernel'
 }
 
+{ #category : #accessing }
+ZippedCollection class >> streamSpecies [
+	^ Array
+]
+
 { #category : #adding }
 ZippedCollection >> add: newObject [ 
 	^ self shouldNotImplement
@@ -36,6 +41,19 @@ ZippedCollection >> do: blockOrSymbol [
 		first with: second do: [:f :s | blockOrSymbol value: (Pair with: f with: s)]
 	] ifFalse: [
 		first with: second do: blockOrSymbol
+	]
+]
+
+{ #category : #enumerating }
+ZippedCollection >> select: blockOrSymbol [
+	^ blockOrSymbol argumentCount = 1 ifTrue: [
+		super select: blockOrSymbol
+	] ifFalse: [
+	"Optimized version of Collection>>#select:"
+		self class streamSpecies new: self size streamContents: [ :stream|
+			1 to: self size do: [ :index |
+				(blockOrSymbol value: (first at: index) value: (second at: index))
+				ifTrue: [ stream nextPut: (self at: index) ]]]
 	]
 ]
 

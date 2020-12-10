@@ -14,6 +14,7 @@ TupleTest >> testPairBasics [
 	self assert: pair first equals: 2.
 	self assert: pair last equals: 5.
 	self assert: pair second equals: 5.
+	self assert: pair equals: (Pair with: 2 with: 5).
 	self should: [ pair third ] raise: SubscriptOutOfBounds.
 	self should: [pair replaceFrom: 1 to: 2 with: #(4 5 6) startingAt: 2] raise: Error.
 
