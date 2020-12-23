@@ -32,6 +32,18 @@ FunctionalTest >> testCurry [
 ]
 
 { #category : #tests }
+FunctionalTest >> testReplace [
+	| x dict |
+	x := 'abc','defd'.
+	dict := {$a->$z . $d->$w} asDictionary.
+	self assert: (x copyReplace: dict) equals: 'zbcwefw'.
+	self assert: x equals: 'abcdefd'.
+	self assert: (x replace: dict) equals: 'zbcwefw'.
+	self assert: x equals: 'zbcwefw'.
+
+]
+
+{ #category : #tests }
 FunctionalTest >> testSlide [
 	self assert: (5 iota slide: 3) asArray equals: #((1 2 3) (2 3 4) (3 4 5)).
 	self assert: (5 iota slide: 2) asArray equals: #((1 2) (2 3) (3 4) (4 5)).

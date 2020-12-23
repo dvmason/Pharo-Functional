@@ -34,6 +34,16 @@ SequenceableCollection >> combinationsOf: anInteger select: testBlock collect: v
 ]
 
 { #category : #'*PharoFunctional' }
+SequenceableCollection >> copyReplace: aBlock [ 
+	"Evaluate aBlock with each of the receiver's elements as the argument.  
+	Collect the resulting values into a copy of self."
+	"('ab cd ab ef ab' copyReplace: [: c | c=$a ifTrue: $z ifFalse: c]) >>> 'zb cd zb ef zb'"
+	^ self species new: self size streamContents: [ :stream |
+			self do: [ :anObject |
+				stream nextPut: (aBlock value: anObject) ]]
+]
+
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> destructure: aBlock [
 	^ aBlock valueWithArguments: self
 ]

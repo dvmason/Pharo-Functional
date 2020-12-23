@@ -1,6 +1,14 @@
 Extension { #name : #Collection }
 
 { #category : #'*PharoFunctional' }
+Collection >> at: anObject ifAbsent: anotherObject [
+" Not all subclasses of Collection implement this,
+  but Dictionary, OrderedDictionary, and SequenceableCollection all do,
+  so this seems like the right place "
+	^ self subclassResponsibility
+]
+
+{ #category : #'*PharoFunctional' }
 Collection >> emptyOrNilOr: aBlock [
 	self isEmpty ifTrue: [ ^ nil ].
 	^ aBlock value: self
@@ -21,4 +29,9 @@ Collection >> scan: aBlock [
 		] ifFalse: [
 			accumulator := aBlock value: accumulator value: each
 		]]
+]
+
+{ #category : #'*PharoFunctional' }
+Collection >> value: anObject [
+	^ self at: anObject ifAbsent: anObject
 ]
