@@ -9,6 +9,6 @@ Trait {
 { #category : #compiler }
 ComposeSyntax classSide >> compilerClass [
 	"Answer a compiler class appropriate for source methods of a class that uses this trait."
-
+	<pharoJsSkip>
 	^ ComposeCompiler
 ]
