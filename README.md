@@ -64,3 +64,12 @@ foo
 		; and: [ 5 < 10 ]
 		; ifTrue: [ 42 ] ifFalse: [ 99 ]
 ```
+
+# Loading
+To load, in a Pharo9 image do:
+```smalltalk
+Metacello new
+	repository: 'github://dvmason/Pharo-Functional:master';
+	baseline: 'PharoFunctional';
+	load
+```
