@@ -1,8 +1,15 @@
 Class {
 	#name : #ComposeScannerTest,
 	#superclass : #RBScannerTest,
+	#traits : 'ComposeSyntax',
+	#classTraits : 'ComposeSyntax classTrait',
 	#category : #'CompileWithCompose-Tests'
 }
+
+{ #category : #initialize }
+ComposeScannerTest >> buildScannerForText: source [
+	^ self scannerClass on: (ReadStream on: source)
+]
 
 { #category : #initialize }
 ComposeScannerTest >> scannerClass [
