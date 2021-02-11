@@ -11,7 +11,7 @@ Class {
 ComposeScanner >> scanIdentifierOrKeyword [
 	| name |
 	self scanName.
-	(currentCharacter = $: and: [stream peek ~= $= and: [stream peek ~= $>]]) 
+	(currentCharacter = $: and: [ (Character specialCharacters includes: stream peek) not ]) 
 		ifTrue: [^self scanKeyword].
 	name := buffer contents.
 	name = 'true' 
