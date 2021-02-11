@@ -32,6 +32,16 @@ FunctionalTest >> testCurry [
 ]
 
 { #category : #tests }
+FunctionalTest >> testProduct [
+   self assert: (#()        product) equals: 1.
+   self assert: (#(1)       product) equals: 1.
+   self assert: (#(1 2)     product) equals: 2.
+   self assert: (#(1 2 3)   product) equals: 6.
+   self assert: (#(1 2 3 4) product) equals: 24.
+
+]
+
+{ #category : #tests }
 FunctionalTest >> testSlide [
 	self assert: (5 iota slide: 3) asArray equals: #((1 2 3) (2 3 4) (3 4 5)).
 	self assert: (5 iota slide: 2) asArray equals: #((1 2) (2 3) (3 4) (4 5)).

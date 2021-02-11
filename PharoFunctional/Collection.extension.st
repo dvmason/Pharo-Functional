@@ -12,6 +12,11 @@ Collection >> frequencies [
 ]
 
 { #category : #'*PharoFunctional' }
+Collection >> product [
+   ^ self inject: 1 into: #*
+]
+
+{ #category : #'*PharoFunctional' }
 Collection >> scan: aBlock [
 	| accumulator first |
 	first := true.
