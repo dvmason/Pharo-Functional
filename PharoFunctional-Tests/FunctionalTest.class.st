@@ -32,6 +32,14 @@ FunctionalTest >> testCurry [
 ]
 
 { #category : #tests }
+FunctionalTest >> testCycle [
+   self assert: (#(1 2 3 4) cycle: 2)  equals: #(1 2).
+   self assert: (#(1 2 3 4) cycle: 3)  equals: #(1 2 3).
+   self assert: (#(1 2 3 4) cycle: 6)  equals: #(1 2 3 4 1 2).
+   self assert: (#(1 2 3 4) cycle: 10) equals: #(1 2 3 4 1 2 3 4 1 2)
+]
+
+{ #category : #tests }
 FunctionalTest >> testProduct [
    self assert: (#()        product) equals: 1.
    self assert: (#(1)       product) equals: 1.

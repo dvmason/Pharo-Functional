@@ -44,6 +44,16 @@ SequenceableCollection >> copyReplace: aBlock [
 ]
 
 { #category : #'*PharoFunctional' }
+SequenceableCollection >> cycle: anInteger [ 
+   | temp |
+   temp := (self class) new: anInteger.
+   1 to: anInteger do: [ :i |
+      temp at: i put: (self at: i - 1 \\ (self size) + 1)
+   ].
+   ^ temp
+]
+
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> destructure: aBlock [
 	^ aBlock valueWithArguments: self
 ]
