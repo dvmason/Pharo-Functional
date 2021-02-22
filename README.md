@@ -37,6 +37,21 @@ Metacello new
     repository: 'github://dvmason/Pharo-Functional:master';
     load: #compiler
 ```
+Then for any class heirarchy where you want to use the extended syntax, add a trait to the class (the uses: line), like:
+```smalltalk
+RBScannerTest subclass: #ComposeExampleTest
+	uses: ComposeSyntax
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'CompileWithCompose-Tests'
+```
+Or, on the class-side define the following method:
+```smalltalk
+compilerClass
+	"Answer a compiler class appropriate for source methods of a class that uses this trait."
+	^ ComposeCompiler
+```
+You can use this second approach if you want to add it to the entire image (including in playgrounds), by defining this in Object class.
 # Pharo-Functional
 Functional support for Pharo
 
