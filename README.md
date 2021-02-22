@@ -1,6 +1,8 @@
 # CompileWithCompose
 This adds a compose or pipe syntax to Pharo. It can significantly
 reduce the need for parentheses and make functional code more readable.
+It works with PharoJS and can be very convenient when using some Javascript
+libraries such as D3.
 
 For example:
 ```smalltalk
@@ -14,7 +16,7 @@ foo
 		:> and: [ 5 < 10 ]
 		:> ifTrue: [ 42 ] ifFalse: [ 99 ]
 ```
-The precedence is between cascade and assigment, so you could say
+The precedence is the same as cascade, so you can intermix them and could say
 something like:
 ```smalltalk
 x := OrderedCollection new
@@ -23,9 +25,17 @@ x := OrderedCollection new
 			yourself
         :> collect: #negated
         :> add: 35;
-        	add: 99
+        	add: 99;
+		yourself
         :> with: #(1 2 3 4) collect: [:l :r| l+r ]
         :> max
+```
+You can load into a Pharo image Playground with:
+```smalltalk
+Metacello new 
+    baseline: 'PharoFunctional';
+    repository: 'github://dvmason/Pharo-Functional:master';
+    load: #compiler
 ```
 # Pharo-Functional
 Functional support for Pharo
@@ -66,7 +76,7 @@ foo
 ```
 
 # Loading
-To load, in a Pharo9 image do:
+To load, in a Pharo9 image Playground do:
 ```smalltalk
 Metacello new
 	repository: 'github://dvmason/Pharo-Functional:master';
