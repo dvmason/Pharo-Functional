@@ -25,6 +25,11 @@ Collection >> product [
 ]
 
 { #category : #'*PharoFunctional' }
+Collection >> rotate: anInteger [ 
+   ^ (self last: self size - anInteger), (self first: anInteger)
+]
+
+{ #category : #'*PharoFunctional' }
 Collection >> scan: aBlock [
 	| accumulator first |
 	first := true.
