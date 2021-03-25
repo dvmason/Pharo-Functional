@@ -1,6 +1,12 @@
 Extension { #name : #Collection }
 
 { #category : #'*PharoFunctional' }
+Collection >> allEqual [
+   self isEmpty ifTrue: [ ^ true ].
+   ^ self allSatisfy: [ :e | self first = e ]
+]
+
+{ #category : #'*PharoFunctional' }
 Collection >> at: anObject ifAbsent: anotherObject [
 " Not all subclasses of Collection implement this,
   but Dictionary, OrderedDictionary, and SequenceableCollection all do,
