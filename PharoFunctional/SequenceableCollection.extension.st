@@ -6,6 +6,13 @@ SequenceableCollection >> >==< other [
 ]
 
 { #category : #'*PharoFunctional' }
+SequenceableCollection >> adjacentDifference [ 
+	^ ((self slide: 2
+	    ) reversed
+	    ) collect: [ :e | e fold: #- ].
+]
+
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> adjacentFind: binaryBlock [
 	^ self zipFind: (self allButFirst) with: binaryBlock.
 ]
@@ -86,7 +93,7 @@ SequenceableCollection >> groupByRuns2Arg: aBlock [
 
 { #category : #'*PharoFunctional' }
 SequenceableCollection >> isUnique [
-	^ self frequencies values max <= 1.
+	^ self unique size = self size.
 ]
 
 { #category : #'*PharoFunctional' }
@@ -101,6 +108,15 @@ SequenceableCollection >> slide: width [
 	   end := end + 1.
 	].
    ^ result   
+]
+
+{ #category : #'*PharoFunctional' }
+SequenceableCollection >> unique [
+   "unique is stable in that it keeps the order that unique elments occur"
+   | uniq size |
+   uniq := Set new.
+   size := 0.
+   ^ self select: [ :e | (uniq add: e;size)> size and: [size := size + 1. true]]
 ]
 
 { #category : #'*PharoFunctional' }

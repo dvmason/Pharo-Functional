@@ -67,3 +67,10 @@ FunctionalTest >> testSlide [
 	self assert: (5 iota slide: 2) asArray equals: #((1 2) (2 3) (3 4) (4 5)).
 
 ]
+
+{ #category : #tests }
+FunctionalTest >> testUnique [
+   self assert: (3 iota,5 iota) unique equals: #(1 2 3 4 5).
+   self assert: (#(3 1),4 iota reversed,3 iota,5 iota) unique equals: #(3 1 4 2 5).
+
+]

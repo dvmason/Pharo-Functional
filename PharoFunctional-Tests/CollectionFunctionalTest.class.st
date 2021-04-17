@@ -19,10 +19,10 @@ CollectionFunctionalTest >> testGrouping [
 
 { #category : #tests }
 CollectionFunctionalTest >> testIsUnique [
-	self assert: (#(1 2 3 4 5) isUnique) equals: true.
-	self assert: (#(1 2 3 4 4) isUnique) equals: false.
-	self assert: (#(1 2 3)     isUnique) equals: true.
-	self assert: (#(36 9 2 2)  isUnique) equals: false.
+	self assert: #(1 2 3 4 5) isUnique.
+	self deny:   #(1 2 3 4 4) isUnique.
+	self assert: #(1 2 3)     isUnique.
+	self deny:   #(36 9 2 2)  isUnique.
 ]
 
 { #category : #tests }
