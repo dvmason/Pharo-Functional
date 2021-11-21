@@ -1,8 +1,20 @@
 Extension { #name : #Object }
 
 { #category : #'*PharoFunctional' }
+Object >> ,+ anObject [
+	"haskell like pair syntax. "
+	^ self asPairWith: anObject . 
+	 
+]
+
+{ #category : #'*PharoFunctional' }
 Object >> @@ aBlock [ 
   ^ self curry: aBlock
+]
+
+{ #category : #'*PharoFunctional' }
+Object >> asPairWith: anObject [
+	^ Pair with: self with: anObject .
 ]
 
 { #category : #'*PharoFunctional' }
