@@ -1,6 +1,12 @@
 Extension { #name : #Object }
 
 { #category : #'*PharoFunctional' }
+Object >> +> aBlock [ 
+	"pipe : pass value to function ."
+  ^ aBlock value: self .
+]
+
+{ #category : #'*PharoFunctional' }
 Object >> ,+ anObject [
 	"haskell like pair syntax. "
 	^ self asPairWith: anObject . 
