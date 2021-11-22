@@ -5,6 +5,21 @@ Class {
 }
 
 { #category : #tests }
+CollectionFunctionalTest >> testAsArgumentsTo [
+	|f nums result|
+	f:=[ :x :y | x+y ].
+	nums:= { 1. 2. }.
+	result  := nums sum.	
+	
+	self 
+		assert: ( nums asArgumentsTo: f )
+		equals: result.
+	self 
+		assert: (nums +>>  f)
+		equals: result.
+]
+
+{ #category : #tests }
 CollectionFunctionalTest >> testFrequencies [
 	self assert: (#(1 2 3 4 5) frequencies) equals: (Dictionary withAll: #(1 1 1 1 1)).
 	self assert: (#(1 2 3 4 4) frequencies) equals: (Dictionary withAll: #(1 1 1 2)).

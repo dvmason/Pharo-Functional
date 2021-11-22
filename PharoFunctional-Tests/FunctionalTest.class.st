@@ -46,6 +46,12 @@ FunctionalTest >> testCycle [
 ]
 
 { #category : #tests }
+FunctionalTest >> testPipeTo [
+	self assert: (1 +> [ :x | x+1] ) equals: 2.
+	self assert: ({1. 2.} +> [ :a| a sum ] )  equals: 3.
+]
+
+{ #category : #tests }
 FunctionalTest >> testProduct [
    self assert: (#()        product) equals: 1.
    self assert: (#(1)       product) equals: 1.

@@ -2,8 +2,8 @@ Extension { #name : #Object }
 
 { #category : #'*PharoFunctional' }
 Object >> +> aBlock [ 
-	"pipe : pass value to function ."
-  ^ aBlock value: self .
+	"pipe : pass value to function (reverse compose) ."
+  ^ self pipeTo: aBlock.
 ]
 
 { #category : #'*PharoFunctional' }
@@ -41,4 +41,11 @@ Object >> emptyOrNilOr: aBlock [
 { #category : #'*PharoFunctional' }
 Object >> nilOr: aBlock [
 	^ aBlock value: self
+]
+
+{ #category : #'*PharoFunctional' }
+Object >> pipeTo: aBlock [ 
+	"pipe : pass value to function ."
+	"see : +>"
+  	^ aBlock value: self.
 ]
