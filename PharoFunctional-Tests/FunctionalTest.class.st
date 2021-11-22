@@ -12,6 +12,12 @@ FunctionalTest >> testAdjacentFind [
 ]
 
 { #category : #tests }
+FunctionalTest >> testAsPairWith [
+	self assert: (#a asPairWith: #b) equals: (Pair with: #a	 with: #b ).
+	self assert: (0 asPairWith: 1) equals: (Pair with: 0	 with: 1 ). 
+]
+
+{ #category : #tests }
 FunctionalTest >> testCombinations [
 	self assert: (3 iota combinationsOf: 2) asSet equals: #((1 2) (1 3) (2 3)) asSet.
 	self assert: (3 iota combinationsOf: 2 select: [: each | each sum = 4]) equals: #((1 3)).
