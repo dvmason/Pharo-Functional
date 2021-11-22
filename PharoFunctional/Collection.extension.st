@@ -1,22 +1,9 @@
 Extension { #name : #Collection }
 
 { #category : #'*PharoFunctional' }
-Collection >> +>> aBlock [ 
-	"pass array as arguments to a block."
-  ^ self asArgumentsTo: aBlock.
-]
-
-{ #category : #'*PharoFunctional' }
 Collection >> allEqual [
    self isEmpty ifTrue: [ ^ true ].
    ^ self allSatisfy: [ :e | self first = e ]
-]
-
-{ #category : #'*PharoFunctional' }
-Collection >> asArgumentsTo: aBlock [ 
-	"pass array as arguments to a block."
-	"see: +>>"
-  ^ aBlock valueWithArguments: self .
 ]
 
 { #category : #'*PharoFunctional' }

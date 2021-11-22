@@ -1,6 +1,12 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*PharoFunctional' }
+BlockClosure >> <+ aValue [
+	"compose syntax."
+	^ self value: aValue.
+]
+
+{ #category : #'*PharoFunctional' }
 BlockClosure >> curry: anObject [
 	^ [: left |  self value: left value: anObject ]
 ]

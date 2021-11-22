@@ -5,15 +5,12 @@ Class {
 }
 
 { #category : #tests }
-CollectionFunctionalTest >> testAsArgumentsTo [
+CollectionFunctionalTest >> testDestructureOperator [
 	|f nums result|
 	f:=[ :x :y | x+y ].
 	nums:= { 1. 2. }.
 	result  := nums sum.	
 	
-	self 
-		assert: ( nums asArgumentsTo: f )
-		equals: result.
 	self 
 		assert: (nums +>>  f)
 		equals: result.
