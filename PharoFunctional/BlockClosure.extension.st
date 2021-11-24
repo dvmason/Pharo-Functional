@@ -7,6 +7,12 @@ BlockClosure >> <+ aValue [
 ]
 
 { #category : #'*PharoFunctional' }
+BlockClosure >> <<+ aCollection [
+	"destructure syntax."
+	^ self valueWithArguments: aCollection .
+]
+
+{ #category : #'*PharoFunctional' }
 BlockClosure >> curry: anObject [
 	^ [: left |  self value: left value: anObject ]
 ]
