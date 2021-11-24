@@ -57,7 +57,12 @@ Functional support for Pharo
 
 This project is to add to Smalltalk additional data structures and methods that are familiar to functional programmers
 
-It includes Tuple class, which is a read-only Array.
+It includes Tuple class, which is a read-only Array.Pairs has the binary message `,+` as a syntax sugar for example:
+
+```smalltalk
+ #a ,+ #b "a Pair(#a #b)"
+```
+
 
 It makes Symbols work as unary, binary, ternary, or quatrenary operators
 
