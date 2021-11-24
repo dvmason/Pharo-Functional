@@ -96,7 +96,7 @@ foo
 ```
 
 
-It also includes composition of blocks as a function example:
+It also includes composition of blocks as a function for example:
 
 ```smalltalk 
 inc:= [ :x| x+1 ].
@@ -107,7 +107,12 @@ inc <+ 1. "2"
 "pipe line from left to right."
 1 +> inc +> toSymbol. "#'2'"
 ```
-
+And destructure binary message .
+```smalltalk
+sum:= [:x :y | x+y ].	
+{ 1. 2 } +>> sum. "3"
+sum <<+ { 1. 2. }. "3"
+```
 
 # Loading
 To load, in a Pharo9 image Playground do:
