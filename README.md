@@ -95,6 +95,20 @@ foo
 		; ifTrue: [ 42 ] ifFalse: [ 99 ]
 ```
 
+
+It also includes composition of blocks as a function example:
+
+```smalltalk 
+inc:= [ :x| x+1 ].
+toSymbol := [ :x|x asString asSymbol ].
+
+"composition from right to left."
+inc <+ 1. "2"
+"pipe line from left to right."
+1 +> inc +> toSymbol. "#'2'"
+```
+
+
 # Loading
 To load, in a Pharo9 image Playground do:
 ```smalltalk
