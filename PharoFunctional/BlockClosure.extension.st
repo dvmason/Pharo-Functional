@@ -1,9 +1,14 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*PharoFunctional' }
-BlockClosure >> <+ aValue [
+BlockClosure >> <+ aBlockOrValue [
 	"compose syntax."
-	^ self value: aValue.
+	(aBlockOrValue isBlock and: [ aBlockOrValue numArgs >= 1 "to support lazy values"]) 
+		"it is a Block"
+		ifTrue: [^ [ :aValue | self value: (aBlockOrValue value: aValue) ]  ]
+		"it's a value or block with no arguments -lazy value- ."
+		ifFalse:[^ self value: aBlockOrValue value ]. 
+	
 ]
 
 { #category : #'*PharoFunctional' }

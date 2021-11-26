@@ -27,6 +27,15 @@ FunctionalTest >> testCombinations [
 ]
 
 { #category : #tests }
+FunctionalTest >> testCompose [ 
+	|inc|
+	inc:=[ :x | x+1].
+	
+	self assert: ( inc <+ inc <+ 1 ) equals: 3.
+	self assert: ( inc <+ inc <+ [1+5] )  equals: 8.
+]
+
+{ #category : #tests }
 FunctionalTest >> testCurry [
 	self assert: (5 @@ #- value: 4) equals: 1.
 	self assert: (#- @@ 4 value: 9) equals: 5.
