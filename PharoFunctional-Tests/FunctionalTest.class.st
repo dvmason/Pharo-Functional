@@ -56,8 +56,12 @@ FunctionalTest >> testCycle [
 
 { #category : #tests }
 FunctionalTest >> testPipeTo [
-	self assert: (1 +> [ :x | x+1] ) equals: 2.
-	self assert: ({1. 2.} +> [ :a| a sum ] )  equals: 3.
+	|inc|.
+	inc:=[ :x | x+1].
+	self assert: (1 +> inc  ) equals: 2.
+	self assert: ([1] +> inc +> inc ) equals: 3.
+	self assert: ([2*2-2] +> inc +> inc ) equals: 4.
+	self assert: ({3. 2.} +> [ :a| a sum ] )  equals: 5.
 ]
 
 { #category : #tests }

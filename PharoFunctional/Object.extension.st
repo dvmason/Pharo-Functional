@@ -47,5 +47,5 @@ Object >> nilOr: aBlock [
 Object >> pipeTo: aBlock [ 
 	"pipe : pass value to function ."
 	"see : +>"
-  	^ aBlock value: self.
+  	^ aBlock value: self value.
 ]
