@@ -23,7 +23,7 @@ ComposeParserTest >> assertMessage: aRBMessageNode equals: aCollection [
 		].
 		node := node receiver.
 	].
-	node isSelf ifTrue: [selectors add: #self].
+	node isSelfVariable ifTrue: [selectors add: #self].
 	self assert: (aCollection class withAll: selectors) equals: aCollection.
 
 ]
