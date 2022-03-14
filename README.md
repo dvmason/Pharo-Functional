@@ -1,4 +1,9 @@
 # CompileWithCompose
+This is an alternate compiler built on top of Pharo's Opal compiler. It can be the compiler of choice for any class. All of the syntax proposed here is otherwise syntax errors that can be recognized by this compiler and turned into legal Pharo Smalltalk. However, the source would still contain these syntax elements... only the internal AST is affected. Only if you lost your source code and recovered it from reverse-compilation would you lose the syntactic forms.
+
+## Already implemented syntax extensions
+
+### Compose / pipe / parrot operator
 This adds a compose or pipe syntax to Pharo (we call it the parrot operator `:>`). It can significantly reduce the need for parentheses and make functional code more readable. It works with PharoJS and can be very convenient when using some Javascript
 libraries such as D3.
 
@@ -30,6 +35,7 @@ x := OrderedCollection new
 ```
 
 ## Proposed syntax extensions
+### Expressions as unary or binary messages
 A proposed extension adds a syntax to support composing blocks or symbols with combinators. This can be very convenient when used with the parrot operator, as well as `curry:` and some other messages from the Pharo-Functional part of this repository. This reduces the amount of visual noise from `value:` and `value:value:` messages. Anywhere a unary messsage can go, you can instead put an expression in parentheses or put a block. Anywhere a binary message can go, you can do the same, but follow the close-parenthesis with a colon (`:`). This is extremely useful with the combinators described later.
 
 For example:
@@ -61,18 +67,24 @@ a: aBlock
    ^ 42 (aBlock): 17
 ```
 
+### Currying (partial expressions)
 `curry:` is very convenient to partially apply parameters to a binary operator. And of course the binary operator could be any of the above operators:
 ```smalltalk
 x := (3+).
-x := [:temp| 3+temp].
 y := (*4).
+```
+would become:
+```smalltalk
+x := [:temp| 3+temp].
 y := [:temp| temp*4].
 ```
 
+These are very convenient to use with the parrot operator:
 ```smalltalk
 x :> + 3 :> (...): 7 :> [...] y :> (4-) :> - 4
 ```
 
+### Initializing local variables at point of declaration
 Initializing variables at the point of declaration is best-practise in most of the programming world. Note that if a `:=` appears in a declaration, the expression must be terminated with a `.` and it can't be omitted on the last initialization:
 ```smalltalk
 | x := 42. y := x+5. z|
@@ -83,6 +95,34 @@ is legal, but
 ```
 is illegal, because the trailing `|` would be be ambigous.
 
+### Collection literals
+Arrays have a literal syntax `{1 . 2 . 3}`, but other collections don't. This extension would recognize `:className` immediately after the `{` and if the className were a collection it would translate, e.g. 
+```smalltalk
+{:Set 3 . 4 . 5 . 3}
+{:Dictionary #a->1 . #b->2}
+```
+to 
+```smalltalk
+Set with: 3 with: 4 with: 5 with: 3
+Dictionary with: #a->1 with: #b->2
+```
+If there are more than 6 values, it will use `withAll:` and an array.
+
+### Destructuring collections
+There isn't a convenient way to return multiple values from a method, or even to extract multiple values from a collection. We propose:
+```smalltalk
+:| a b c | := some-collection
+```
+which would destructure the 3 elements of a SequenceableCollection or would extract the value of keys `#a` `#b` etc. if it was a Dictionary, with anything else being a runtime error. This is conveniently done by converting that to:
+```smalltalk
+([:temp|
+	a := temp firstNamed: #a.
+	b := temp secondNamed: #b.
+	c := temp thirdNames: #c] value: some-collection)
+```
+These `firstNamed:`, etc. methods would be trivial to implement in those collection classes and also other classes could handle them if appropriate. Using this syntax will also define those local vaiables in the nearest enclosing scope if they aren't already accessible.
+
+## How to use this
 You can load into a Pharo image Playground with:
 ```smalltalk
 Metacello new 
