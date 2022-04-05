@@ -1,6 +1,12 @@
 Extension { #name : #SequenceableCollection }
 
 { #category : #'*PharoFunctional' }
+SequenceableCollection >> +>> aBlock [ 
+	"destructure arguments to a block."
+  ^ aBlock valueWithArguments: self.
+]
+
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> >==< other [
 	^ ZippedCollection new with: self with: other
 ]

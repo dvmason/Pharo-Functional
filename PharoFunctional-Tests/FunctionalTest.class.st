@@ -12,12 +12,27 @@ FunctionalTest >> testAdjacentFind [
 ]
 
 { #category : #tests }
+FunctionalTest >> testAsPairWith [
+	self assert: (#a asPairWith: #b) equals: (Pair with: #a	 with: #b ).
+	self assert: (0 asPairWith: 1) equals: (Pair with: 0	 with: 1 ). 
+]
+
+{ #category : #tests }
 FunctionalTest >> testCombinations [
 	self assert: (3 iota combinationsOf: 2) asSet equals: #((1 2) (1 3) (2 3)) asSet.
 	self assert: (3 iota combinationsOf: 2 select: [: each | each sum = 4]) equals: #((1 3)).
 	self assert: (3 iota combinationsOf: 2 select: [: each | each sum = 4] collect: [: each | each first]) equals: #(1).
 	self assert: (3 iota combinationsOf: 2 collect: [: each | each sum]) asSet equals: #(3 4 5) asSet.
 
+]
+
+{ #category : #tests }
+FunctionalTest >> testCompose [ 
+	|inc|
+	inc:=[ :x | x+1].
+	
+	self assert: ( inc <+ inc <+ 1 ) equals: 3.
+	self assert: ( inc <+ inc <+ [1+5] )  equals: 8.
 ]
 
 { #category : #tests }
@@ -37,6 +52,16 @@ FunctionalTest >> testCycle [
    self assert: (#(1 2 3 4) cycle: 3)  equals: #(1 2 3).
    self assert: (#(1 2 3 4) cycle: 6)  equals: #(1 2 3 4 1 2).
    self assert: (#(1 2 3 4) cycle: 10) equals: #(1 2 3 4 1 2 3 4 1 2)
+]
+
+{ #category : #tests }
+FunctionalTest >> testPipeTo [
+	|inc|.
+	inc:=[ :x | x+1].
+	self assert: (1 +> inc  ) equals: 2.
+	self assert: ([1] +> inc +> inc ) equals: 3.
+	self assert: ([2*2-2] +> inc +> inc ) equals: 4.
+	self assert: ({3. 2.} +> [ :a| a sum ] )  equals: 5.
 ]
 
 { #category : #tests }
