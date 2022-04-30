@@ -151,18 +151,22 @@ Functional support for Pharo
 
 This project is to add to Smalltalk additional data structures and methods that are familiar to functional programmers
 
+## Tuple class
 It includes Tuple class, which is a read-only Array.
 
+## Extended Symbols suport
 It makes Symbols work as unary, binary, ternary, or quatrenary operators
 
 It adds a unary and binary `map:` and `map:map:` to symbols, so:
  + `#negated map: #(1 2 3)` equals ``#(-1 -2 -3)`
  + `#+ map: #(1 2 3) map: #(-1 0 1)` equals ``#(0 2 4)`
 
+## ZippedCollection
 It also includes ZippedCollection which is a collection of Pairs.
 `collect:` and `do:` on ZippedCollection will call the block/symbol with either a Pair (if it's 1-argument) or the pair of elements from the two collections (if it's 2-argument)
 SequenceableCollections can be zipped together with either `zip:` or `>==<
 
+## `curry:` method
 It also includes a `curry:` method that allows composing a value and a binary operator or block, so:
  + `(5 curry: [:l :r | l-r]) value: 4` equals `1`
  + `([:l :r | l-r] curry: 4) value: 9` equals `5`
@@ -175,6 +179,15 @@ If programming in a class with `CompileWithCompose` enabled, you can use this as
 + `x := #- curry: 4. 9 (x)` equals `5`
 + `addArrays := #+ curry: #map:map:. #(1 2 3) (addArrays): #(-1 0 1)` equals `#(0 2 4)` - note the `(...):` because the curried function requires 2 values - i.e. it's a binary message.
 
+## slices
+Slices allow a view on a data structure that can be iterated over. This is an extension of slices as seen in Rust and Zig. This works well for iterators while minimizing the copying of data.
+```smalltalk
+ #(1 2 3 4 5 6 7 8) sliceFrom: 3 to: 7
+      :> reduceWith: #(true false true true false)
+	  :> collect: #negated
+ ```
+ would give `#(-3 -5 -6)` without creating any garbage (i.e. the collect is the first place that allocates some memory.
+## chain method
 It also includes a chain method that allows similar code to `CompileWithCompose` but with no additional syntax (unfortunately quite a bit slower because it requires a DNU and `perform` for each chained message:
 ```smalltalk
 foo
