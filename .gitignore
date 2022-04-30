@@ -30,3 +30,4 @@ SqueakDebug.log
 /github-cache
 github-*.zip
 .obsidian/*
+*.md~
