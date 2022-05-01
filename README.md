@@ -85,15 +85,16 @@ x :> + 3 :> (...): 7 :> [...] y :> (4-) :> - 4
 ```
 
 ### Initializing local variables at point of declaration
-Initializing variables at the point of declaration is best-practise in most of the programming world. Note that if a `:=` appears in a declaration, the expression must be terminated with a `.` and it can't be omitted on the last initialization:
+Initializing variables at the point of declaration is best-practise in most of the programming world. Note that if a `:=` or `=` appears in a declaration, the expression must be terminated with a `.` and it can't be omitted on the last initialization:
 ```smalltalk
-| x := 42. y := x+5. z|
+| x := 42. y = x+5. z|
 ```
 is legal, but
 ```smalltalk
-| x := 42. y := x+5. z := 17 |
+| x := 42. y = x+5. z = 17 |
 ```
 is illegal, because the trailing `|` would be be ambigous.
+Note that `:=` declares and initializes a mutable variable and `=` declares and initializes an immutable variable.
 
 ### Collection literals
 Arrays have a literal syntax `{1 . 2 . 3}`, but other collections don't. This extension would recognize `:className` immediately after the `{` and if the className were a collection it would translate, e.g. 
