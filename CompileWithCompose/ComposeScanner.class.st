@@ -7,8 +7,13 @@ Class {
 	#category : #'CompileWithCompose-Kernel'
 }
 
-{ #category : #'private-scanning' }
+{ #category : #'private - scanning' }
 ComposeScanner >> scanIdentifierOrKeyword [
+	"!! Attention !! There are 3 case of Literal Tokens : true, false and nil."
+	"This scan accepts keywords only containing a colon."
+	"The presence of a colon will mark the creation of a keyword, except when followed with a specialCharacter.
+	 Otherwise an Identifier is created."
+	"To ensure the pertinence of this scanner, it must be called only if the current character is 	, 	 	 alphabetic."
 	| name |
 	self scanName.
 	(currentCharacter = $: and: [ (Character specialCharacters includes: stream peek) not ]) 
@@ -35,7 +40,7 @@ ComposeScanner >> scanIdentifierOrKeyword [
 	^RBIdentifierToken value: name start: tokenStart
 ]
 
-{ #category : #'private-scanning' }
+{ #category : #'private - scanning' }
 ComposeScanner >> scanSpecialCharacter [
 	currentCharacter = $: 
 		ifTrue: [
