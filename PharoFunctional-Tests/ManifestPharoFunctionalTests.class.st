@@ -9,7 +9,7 @@ Class {
 
 { #category : #'code-critics' }
 ManifestPharoFunctionalTests class >> ruleExtraBlockRuleV1FalsePositive [
-	^ #(#(#(#RGPackageDefinition #(#'Pharo-Functional-Tests')) #'2020-11-22T12:02:47.703658-05:00') )
+	^ #(#(#(#RGPackageDefinition #(#'PharoFunctional-Tests')) #'2020-11-22T12:02:47.703658-05:00') )
 ]
 
 { #category : #'code-critics' }
