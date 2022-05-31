@@ -16,7 +16,29 @@ ComposeParser >> cascadeNodeWithMessages: messages semicolons: semicolons [
 		]
 ]
 
-{ #category : #'private-parsing' }
+{ #category : #'private - parsing' }
+ComposeParser >> parseArray [
+	"Although an array node represents an array, it is not an Array-like object."
+	| startToken node nodeClass |
+	startToken := currentToken.
+	self step.
+	(currentToken isSpecial and: [currentToken value = $:]) ifTrue: [
+		self step.
+		(currentToken isIdentifier and: [Smalltalk at: currentToken value asSymbol ifPresent: [: class | (class canUnderstand: #firstNamed:) and: [ nodeClass := class. true ] ] ifAbsent: false]) 
+			ifFalse: [ ^ self parserError: 'expected class that understands firstNamed: etc.'].
+		self halt.
+	].
+	node := self arrayNodeClass new.
+	node left: startToken start.
+	self parseStatementList: false  into: node untilAnyCloserOf: '}'.
+	(currentToken isSpecial and: [currentToken value = $}]) 
+		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: 'expected }'].
+	node right: currentToken start.
+	self step.
+	^ node
+]
+
+{ #category : #'private - parsing' }
 ComposeParser >> parseAssignment [
 	"Need one token lookahead to see if we have a ':='. This method could 
 	make it possible to assign the literals true, false and nil."
@@ -33,7 +55,7 @@ ComposeParser >> parseAssignment [
 		position: position
 ]
 
-{ #category : #parsing }
+{ #category : #'private - parsing' }
 ComposeParser >> parseBinaryMessageCascadeWith: receiver [
 	| temp |
 	currentToken isLiteralToken ifTrue: [self patchNegativeLiteral].
@@ -43,7 +65,7 @@ ComposeParser >> parseBinaryMessageCascadeWith: receiver [
 	^ temp
 ]
 
-{ #category : #'private-parsing' }
+{ #category : #'private - parsing' }
 ComposeParser >> parsePipeMessage [
 	| node |
 	node := self parseCascadeMessage.
@@ -68,7 +90,7 @@ ComposeParser >> parsePipeMessage [
 	^ node
 ]
 
-{ #category : #'private-parsing' }
+{ #category : #'private - parsing' }
 ComposeParser >> parsePipeOrCascadeMessage [
 	| node messages semicolons |
 	node := self parseKeywordMessage.
@@ -105,6 +127,32 @@ ComposeParser >> parsePipeOrCascadeMessage [
 	].
 	^ self cascadeNodeWithMessages: messages semicolons: semicolons
 
+]
+
+{ #category : #'private - parsing' }
+ComposeParser >> parseUnaryMessage [
+	| node |
+	node := self parsePrimitiveObject.
+	self addCommentsTo: node.
+	[currentToken isLiteralToken ifTrue: [self patchLiteralMessage].
+	
+	currentToken isIdentifier] 
+			whileTrue: [node := self parseUnaryMessageWith: node].
+	self addCommentsTo: node.
+	^node
+]
+
+{ #category : #'private - parsing' }
+ComposeParser >> parseUnaryMessageWith: aNode [ 
+	| selector |
+	
+	selector := self selectorNodeClass value: currentToken value keywordPositions: (Array with: currentToken start).
+	self step.
+	^self messageNodeClass
+		receiver: aNode
+		selector:  selector
+		keywordsPositions: selector keywordPositions
+		arguments: #()
 ]
 
 { #category : #accessing }

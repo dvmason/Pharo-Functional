@@ -9,5 +9,10 @@ Class {
 
 { #category : #accessing }
 ComposeCompiler >> compilationContext [
-	^ compilationContext ifNil: [ compilationContext := self compilationContextClass default parserClass: ComposeParser ]
+	^ compilationContext ifNil: [ compilationContext := self compilationContextClass default parserClass: self composeParserClass ]
+]
+
+{ #category : #accessing }
+ComposeCompiler >> composeParserClass [
+	^ ComposeParser
 ]
