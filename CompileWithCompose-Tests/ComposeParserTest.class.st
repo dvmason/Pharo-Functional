@@ -45,18 +45,11 @@ ComposeParserTest >> testBlockSelector [
 ComposeParserTest >> testCollectionLiterals [
 	self assertSourceCode: (self parserClass parseExpression: ' {1. 2. 3} ') equals: '{1. 2. 3}'.
 	self should: [self parserClass parseExpression: ' {:foo 1. 2. 3} ' onError: [Error signal]] raise: Error.
-	self should: [self parserClass parseExpression: ' {:Set 1. 2. 3} ' onError: [Error signal]] raise: Error.
-	self assertSourceCode: (self parserClass parseExpression: ' {:Array 1. 2. 3} ') equals: #(yourself msg self).
-	self assertSourceCode: (self parserClass parseExpression: ' {:Dictionary #a->1. #b->2. #c->3} ') equals: #(yourself msg self).
-
-]
-
-{ #category : #tests }
-ComposeParserTest >> testCurrySelector [
-	self assertMessage: (self parserClass parseExpression: ' (+3)') equals: #(yourself msg self).
-	self assertMessage: (self parserClass parseExpression: ' (3+)') equals: #(yourself msg self).
-	self assertMessage: (self parserClass parseExpression: ' (+)') equals: #(yourself msg self).
-
+	self should: [self parserClass parseExpression: ' {:Collection 1. 2. 3} ' onError: [Error signal]] raise: Error.
+	self assertSourceCode: (self parserClass parseExpression: ' {:Array 1. 2. 3} ') equals: '{:Array 1. 2. 3}'.
+	self assertSourceCode: (self parserClass parseExpression: ' {:Set 1. 2. 3} ') equals: '{:Set 1. 2. 3'.
+	self assertSourceCode: (self parserClass parseExpression: ' {:Bag 1. 2. 3} ') equals: '{:Bag 1. 2. 3'.
+	self assertSourceCode: (self parserClass parseExpression: ' {:Dictionary #a->1. #b->2. #c->3} ') equals: '{:Dictionary #a->1. #b->2. #c->3'.
 ]
 
 { #category : #tests }
@@ -68,7 +61,6 @@ ComposeParserTest >> testDesctructureCollection [
 { #category : #tests }
 ComposeParserTest >> testParenSelector [
 
-	self halt.
 	self
 		assertMessage:
 		(self parserClass parseExpression: ' self (msg yourself) xxx')

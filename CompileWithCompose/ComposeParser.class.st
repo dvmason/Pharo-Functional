@@ -25,11 +25,11 @@ ComposeParser >> parseArray [
 	| startToken node nodeClass |
 	startToken := currentToken.
 	self step.
+	nodeClass := Array.
 	(currentToken isSpecial and: [currentToken value = $:]) ifTrue: [
 		self step.
-		(currentToken isIdentifier and: [Smalltalk at: currentToken value asSymbol ifPresent: [: class | (class canUnderstand: #firstNamed:) and: [ nodeClass := class. true ] ] ifAbsent: false]) 
+		(currentToken isIdentifier and: [Smalltalk at: currentToken value asSymbol ifPresent: [: class | (class canUnderstand: #firstNamed:) and: [ nodeClass := class. self step. true ] ] ifAbsent: false]) 
 			ifFalse: [ ^ self parserError: 'expected class that understands firstNamed: etc.'].
-		self halt.
 	].
 	node := self arrayNodeClass new.
 	node left: startToken start.
@@ -38,7 +38,13 @@ ComposeParser >> parseArray [
 		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: 'expected }'].
 	node right: currentToken start.
 	self step.
-	^ node
+	nodeClass == Array ifTrue: [ ^ node ].
+	self halt.
+	node statements size > 6 ifTrue: [ self halt ].
+	^ RBMessageNode
+	receiver: ((RBVariableNode named: nodeClass name) start: startToken start)
+	selector: ('' join: (node statements collect: [:ignore| 'with:'])) asSymbol
+	arguments: node statements
 ]
 
 { #category : #'private - parsing' }
