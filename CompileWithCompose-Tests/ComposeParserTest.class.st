@@ -35,6 +35,7 @@ ComposeParserTest >> assertSourceCode: anRBNode equals: aString [
 
 { #category : #tests }
 ComposeParserTest >> testBlockSelector [
+	self assertMessage: (self parserClass parseExpression: ' self [:x| x msg]') equals: #(yourself msg self).
 	self assertMessage: (self parserClass parseExpression: ' self [:x| x msg] xxx') equals: #(yourself msg self).
 	self assertMessage: (self parserClass parseExpression: ' self [:x:y| x msg: y] xxx') equals: #(yourself msg: self).
 
@@ -66,9 +67,16 @@ ComposeParserTest >> testDesctructureCollection [
 
 { #category : #tests }
 ComposeParserTest >> testParenSelector [
-	self assertMessage: (self parserClass parseExpression: ' self (msg yourself) xxx') equals: #(yourself msg self).
-	self assertMessage: (self parserClass parseExpression: ' self (arg msg:arg): xxx') equals: #(yourself msg: self).
 
+	self halt.
+	self
+		assertMessage:
+		(self parserClass parseExpression: ' self (msg yourself) xxx')
+		equals: #( yourself msg self ).
+	self
+		assertMessage:
+		(self parserClass parseExpression: ' self (arg msg:arg): xxx')
+		equals: #( yourself msg: self )
 ]
 
 { #category : #tests }

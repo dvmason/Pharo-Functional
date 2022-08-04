@@ -4,6 +4,9 @@ I subclass the RBParser and add syntax recognition for a compose syntax: ':>'
 Class {
 	#name : #ComposeParser,
 	#superclass : #RBParser,
+	#instVars : [
+		'pendingBinaryOperator'
+	],
 	#category : #'CompileWithCompose-Kernel'
 }
 
@@ -130,29 +133,62 @@ ComposeParser >> parsePipeOrCascadeMessage [
 ]
 
 { #category : #'private - parsing' }
-ComposeParser >> parseUnaryMessage [
-	| node |
-	node := self parsePrimitiveObject.
-	self addCommentsTo: node.
-	[currentToken isLiteralToken ifTrue: [self patchLiteralMessage].
-	
-	currentToken isIdentifier] 
-			whileTrue: [node := self parseUnaryMessageWith: node].
-	self addCommentsTo: node.
-	^node
+ComposeParser >> parseUnaryBlockWith: aNode [
+
+	| block |
+	^ (currentToken value = $[
+		   ifTrue: [ 
+			   block := self saveCommentsDuring: [ self parseBlock ].
+			   block arguments size ]
+		   ifFalse: [ 
+			   block := self parseParenthesizedExpression.
+			   currentToken value = $:
+				   ifTrue: [ 
+					   self step.
+					   2 ]
+				   ifFalse: [ 1 ] ]) = 2
+		  ifTrue: [ 
+			  pendingBinaryOperator := block.
+			  aNode ]
+		  ifFalse: [ 
+			  self messageNodeClass
+				  receiver: block
+				  selector: #value:
+				  keywordsPositions: nil
+				  arguments: (Array with: aNode) ]
 ]
 
 { #category : #'private - parsing' }
-ComposeParser >> parseUnaryMessageWith: aNode [ 
-	| selector |
-	
-	selector := self selectorNodeClass value: currentToken value keywordPositions: (Array with: currentToken start).
-	self step.
-	^self messageNodeClass
-		receiver: aNode
-		selector:  selector
-		keywordsPositions: selector keywordPositions
-		arguments: #()
+ComposeParser >> parseUnaryMessage [
+
+	| node |
+	node := self parsePrimitiveObject.
+	self addCommentsTo: node.
+	pendingBinaryOperator := nil.
+	[ 
+	currentToken isLiteralToken ifTrue: [ self patchLiteralMessage ].
+	pendingBinaryOperator isNil and: [ 
+		currentToken isIdentifier or: [ 
+			'([' includes: currentToken value  ] ] ] 
+		whileTrue: [ node := self parseUnaryMessageWith: node ].
+	self addCommentsTo: node.
+	^ node
+]
+
+{ #category : #'private - parsing' }
+ComposeParser >> parseUnaryMessageWith: aNode [
+
+	| selector block |
+	currentToken isIdentifier  ifFalse: [ ^ self parseUnaryBlockWith: aNode].
+			  selector := self selectorNodeClass
+				              value: currentToken value
+				              keywordPositions: (Array with: currentToken start).
+			  self step.
+	^			  self messageNodeClass
+				  receiver: aNode
+				  selector: selector
+				  keywordsPositions: selector keywordPositions
+				  arguments: #(  )
 ]
 
 { #category : #accessing }
