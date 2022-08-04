@@ -21,30 +21,55 @@ ComposeParser >> cascadeNodeWithMessages: messages semicolons: semicolons [
 
 { #category : #'private - parsing' }
 ComposeParser >> parseArray [
+
 	"Although an array node represents an array, it is not an Array-like object."
-	| startToken node nodeClass |
+
+	| startToken node nodeClass receiver |
 	startToken := currentToken.
 	self step.
 	nodeClass := Array.
-	(currentToken isSpecial and: [currentToken value = $:]) ifTrue: [
+	(currentToken isSpecial and: [ currentToken value = $: ]) ifTrue: [ 
 		self step.
-		(currentToken isIdentifier and: [Smalltalk at: currentToken value asSymbol ifPresent: [: class | (class canUnderstand: #firstNamed:) and: [ nodeClass := class. self step. true ] ] ifAbsent: false]) 
-			ifFalse: [ ^ self parserError: 'expected class that understands firstNamed: etc.'].
-	].
+		(currentToken isIdentifier and: [ 
+			 Smalltalk
+				 at: currentToken value asSymbol
+				 ifPresent: [ :class | 
+					 class isClass and: [ 
+						 nodeClass := class.
+						 self step.
+						 true ] ]
+				 ifAbsent: false ]) ifFalse: [ 
+			^ self parserError: 'expected class' ] ].
 	node := self arrayNodeClass new.
 	node left: startToken start.
-	self parseStatementList: false  into: node untilAnyCloserOf: '}'.
-	(currentToken isSpecial and: [currentToken value = $}]) 
-		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: 'expected }'].
+	self parseStatementList: false into: node untilAnyCloserOf: '}'.
+	(currentToken isSpecial and: [ currentToken value = $} ]) ifFalse: [ 
+		^ self
+			  parseEnglobingError: node statements
+			  with: startToken
+			  errorMessage: 'expected }' ].
 	node right: currentToken start.
 	self step.
 	nodeClass == Array ifTrue: [ ^ node ].
-	self halt.
-	node statements size > 6 ifTrue: [ self halt ].
-	^ RBMessageNode
-	receiver: ((RBVariableNode named: nodeClass name) start: startToken start)
-	selector: ('' join: (node statements collect: [:ignore| 'with:'])) asSymbol
-	arguments: node statements
+	receiver := (RBVariableNode named: nodeClass name) start:
+		            startToken start.
+	node statements size <= 6 ifTrue: [ 
+		| selector |
+		selector := ('' join:
+			             (node statements collect: [ :ignore | 'with:' ]))
+			            asSymbol.
+		(nodeClass classSide canUnderstand: selector) ifTrue: [ 
+			^ RBMessageNode
+				  receiver: receiver
+				  selector: selector
+				  arguments: node statements ] ].
+	#( withAll: newFrom: ) do: [ :selector | 
+		(nodeClass classSide canUnderstand: selector) ifTrue: [ 
+			^ RBMessageNode
+				  receiver: receiver
+				  selector: selector
+				  arguments: { node } ] ].
+	^ self parserError: 'Object is dupposed to understand newfrom:'
 ]
 
 { #category : #'private - parsing' }

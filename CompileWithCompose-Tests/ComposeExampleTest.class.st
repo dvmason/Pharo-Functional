@@ -7,6 +7,13 @@ Class {
 }
 
 { #category : #tests }
+ComposeExampleTest >> testArrayLiterals [
+	self assert: {:Dictionary #a->1. #b->2. #c->3} equals: {#a->1. #b->2. #c->3} asDictionary.
+	self assert: {:Set 1. 2. 3} equals: #(1 2 3) asSet.
+	
+]
+
+{ #category : #tests }
 ComposeExampleTest >> testCompose [
 	self assert: (
 	 17 negated

@@ -43,13 +43,38 @@ ComposeParserTest >> testBlockSelector [
 
 { #category : #tests }
 ComposeParserTest >> testCollectionLiterals [
-	self assertSourceCode: (self parserClass parseExpression: ' {1. 2. 3} ') equals: '{1. 2. 3}'.
-	self should: [self parserClass parseExpression: ' {:foo 1. 2. 3} ' onError: [Error signal]] raise: Error.
-	self should: [self parserClass parseExpression: ' {:Collection 1. 2. 3} ' onError: [Error signal]] raise: Error.
-	self assertSourceCode: (self parserClass parseExpression: ' {:Array 1. 2. 3} ') equals: '{:Array 1. 2. 3}'.
-	self assertSourceCode: (self parserClass parseExpression: ' {:Set 1. 2. 3} ') equals: '{:Set 1. 2. 3'.
-	self assertSourceCode: (self parserClass parseExpression: ' {:Bag 1. 2. 3} ') equals: '{:Bag 1. 2. 3'.
-	self assertSourceCode: (self parserClass parseExpression: ' {:Dictionary #a->1. #b->2. #c->3} ') equals: '{:Dictionary #a->1. #b->2. #c->3'.
+
+	self
+		assertSourceCode: (self parserClass parseExpression: ' {1. 2. 3} ')
+		equals: '{1. 2. 3}'.
+	self
+		should: [ 
+			self parserClass
+				parseExpression: ' {:foo 1. 2. 3} '
+				onError: [ Error signal ] ]
+		raise: Error.
+	self
+		assertSourceCode:
+		(self parserClass parseExpression: ' {:Array 1. 2. 3} ')
+		equals: '{:Array 1. 2. 3}'.
+	self
+		assertSourceCode:
+		(self parserClass parseExpression: ' {:Set 1. 2. 3} ')
+		equals: '{:Set 1. 2. 3'.
+	self
+		assertSourceCode:
+		(self parserClass parseExpression: ' {:Set 1. 2. 3. 4. 5. 6. 7} ')
+		equals: '{:Set 1. 2. 3. 4. 5. 6. 7}'.
+
+	self
+		assertSourceCode:
+		(self parserClass parseExpression: ' {:Bag 1. 2. 3} ')
+		equals: '{:Bag 1. 2. 3'.
+
+	self
+		assertSourceCode: (self parserClass parseExpression:
+				 ' {:Dictionary #a->1. #b->2. #c->3} ')
+		equals: '{:Dictionary #a->1. #b->2. #c->3'
 ]
 
 { #category : #tests }
