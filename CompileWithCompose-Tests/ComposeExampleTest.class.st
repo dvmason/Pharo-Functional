@@ -17,6 +17,7 @@ ComposeExampleTest >> testArrayLiterals [
 ComposeExampleTest >> testBlockOperators [
 	self assert: 3 [ :x | x*14 ] equals: 42.
 	self assert: 3 [ :x :y | x*y*2 ] 7 equals: 42.
+	self assert: 3 [ :x | x [:y| y*2] ] [ :x :y | x [:z| z+1] [:z :w| z@w] y ] 4 [:x| x+3] equals: 7@7.
 
 ]
 
@@ -61,6 +62,7 @@ ComposeExampleTest >> testMixed2 [
 ComposeExampleTest >> testParenOperators [
 	self assert: 3 ( #negated ) equals: -3.
 	self assert: 6 ( #* ): 7 equals: 42.
+	self assert: 3 ( #raised [ :x :y | (x (#,): y ,':') asSymbol ] #To ): 4 equals: 81.
 
 ]
 
