@@ -14,6 +14,13 @@ ComposeExampleTest >> testArrayLiterals [
 ]
 
 { #category : #tests }
+ComposeExampleTest >> testBlockOperators [
+	self assert: 3 [ :x | x*14 ] equals: 42.
+	self assert: 3 [ :x :y | x*y*2 ] 7 equals: 42.
+
+]
+
+{ #category : #tests }
 ComposeExampleTest >> testCompose [
 	self assert: (
 	 17 negated

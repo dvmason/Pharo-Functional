@@ -10,7 +10,7 @@ Class {
 	#category : #'CompileWithCompose-Kernel'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - parsing' }
 ComposeParser >> cascadeNodeWithMessages: messages semicolons: semicolons [
 	^ messages size = 1 ifTrue: [
 			messages first
@@ -59,13 +59,13 @@ ComposeParser >> parseArray [
 			             (node statements collect: [ :ignore | 'with:' ]))
 			            asSymbol.
 		(nodeClass classSide canUnderstand: selector) ifTrue: [ 
-			^ RBMessageNode
+			^ self messageNodeClass
 				  receiver: receiver
 				  selector: selector
 				  arguments: node statements ] ].
 	#( withAll: newFrom: ) do: [ :selector | 
 		(nodeClass classSide canUnderstand: selector) ifTrue: [ 
-			^ RBMessageNode
+			^ self messageNodeClass
 				  receiver: receiver
 				  selector: selector
 				  arguments: { node } ] ].
@@ -90,6 +90,20 @@ ComposeParser >> parseAssignment [
 ]
 
 { #category : #'private - parsing' }
+ComposeParser >> parseBinaryMessage [
+
+	| node |
+	node := self parseUnaryMessage.
+
+	[ 
+	pendingBinaryOperator notNil or: [ 
+		currentToken isLiteralToken ifTrue: [ self patchNegativeLiteral ].
+		currentToken isBinary ] ] whileTrue: [ 
+		node := self parseBinaryMessageWith: node ].
+	^ node
+]
+
+{ #category : #'private - parsing' }
 ComposeParser >> parseBinaryMessageCascadeWith: receiver [
 	| temp |
 	currentToken isLiteralToken ifTrue: [self patchNegativeLiteral].
@@ -97,6 +111,29 @@ ComposeParser >> parseBinaryMessageCascadeWith: receiver [
 	temp := self parseBinaryMessageWith: receiver.
 	temp == receiver ifTrue: [ ^ self parserError: 'Message expected'].
 	^ temp
+]
+
+{ #category : #'private - parsing' }
+ComposeParser >> parseBinaryMessageWith: aNode [
+
+	| binaryNode |
+	pendingBinaryOperator ifNil: [ 
+		binaryNode := self selectorNodeClass
+			              value: currentToken value
+			              keywordPositions: (Array with: currentToken start).
+		self step.
+		^ self messageNodeClass
+			  receiver: aNode
+			  selector: binaryNode
+			  keywordsPositions: binaryNode keywordPositions
+			  arguments: (Array with: self parseUnaryMessage) ].
+	binaryNode := pendingBinaryOperator.
+	pendingBinaryOperator := nil.
+	^ self messageNodeClass
+		  receiver: binaryNode
+		  selector: #value:value:
+		  keywordsPositions: #(  )
+		  arguments: { aNode . self parseUnaryMessage}
 ]
 
 { #category : #'private - parsing' }
@@ -185,8 +222,7 @@ ComposeParser >> parseUnaryBlockWith: aNode [
 			  self messageNodeClass
 				  receiver: block
 				  selector: #value:
-				  keywordsPositions: nil
-				  arguments: (Array with: aNode) ]
+				  arguments: { aNode } ]
 ]
 
 { #category : #'private - parsing' }
