@@ -60,7 +60,9 @@ ComposeExampleTest >> testMixed2 [
 
 { #category : #tests }
 ComposeExampleTest >> testParenOperators [
-	self assert: 3 ( #negated ) equals: -3.
+	| flag |
+	flag := true.
+	self assert: 3 ( flag ifTrue: [#negated] ifFalse: [#abs] ) equals: -3.
 	self assert: 6 ( #* ): 7 equals: 42.
 	self assert: 3 ( #raised [ :x :y | (x (#,): y ,':') asSymbol ] #To ): 4 equals: 81.
 
