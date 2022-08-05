@@ -132,8 +132,10 @@ ComposeParser >> parseBinaryMessageWith: aNode [
 	^ self messageNodeClass
 		  receiver: binaryNode
 		  selector: #value:value:
-		  keywordsPositions: #(  )
-		  arguments: { aNode . self parseUnaryMessage}
+		  keywordsPositions: #(0 0  )
+		  arguments: { 
+				  aNode.
+				  self parseUnaryMessage }
 ]
 
 { #category : #'private - parsing' }

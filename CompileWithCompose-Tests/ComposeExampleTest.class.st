@@ -58,6 +58,13 @@ ComposeExampleTest >> testMixed2 [
 ]
 
 { #category : #tests }
+ComposeExampleTest >> testParenOperators [
+	self assert: 3 ( #negated ) equals: -3.
+	self assert: 6 ( #* ): 7 equals: 42.
+
+]
+
+{ #category : #tests }
 ComposeExampleTest >> testSimple [
 	self assert: (#('apple' 'peach' 'banana')
 	  groupedBy: #size :>
