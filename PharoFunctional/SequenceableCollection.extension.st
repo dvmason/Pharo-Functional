@@ -66,7 +66,35 @@ SequenceableCollection >> destructure: aBlock [
 ]
 
 { #category : #'*PharoFunctional' }
-SequenceableCollection >> groupByRuns2Arg: aBlock [
+SequenceableCollection >> groupByRunsEqual: aBlock [
+	"Answer a new collection of the same species as the receiver with elements being collections (of the receiver species) containing those elements of the receiver for which the given block consecutively evaluates to the same object."
+
+	"(#(1 2 3 4 4 1 2 3 5 6 ) groupByEqualRuns: [ :each | each = 4]) >>> #(#(1 2 3) #(4 4) #(1 2 3 5 6))"
+
+	"(#(1 2 3 4 1 2 3 4 5 6 ) groupByEqualRuns: [ :each | each = 4]) >>> #(#(1 2 3) #(4) #(1 2 3) #(4) #(5 6))"
+
+	"((1 to: 12) groupByEqualRuns: [ :each | (each \\ 3) = 0]) >>> #(#(1 2) #(3) #(4 5) #(6) #(7 8) #(9) #(10 11) #(12))"
+
+	| str eStr r |
+	str := Array new writeStream.
+	r := nil.
+	eStr := self species new writeStream.
+	self
+		do: [ :e | 
+			| t |
+			(t := aBlock value: e) = r
+				ifFalse: [ r := t.
+					eStr isEmpty
+						ifFalse: [ str nextPut: eStr contents.
+							eStr reset ] ].
+			eStr nextPut: e ].
+	eStr isEmpty
+		ifFalse: [ str nextPut: eStr contents ].
+	^ str contents
+]
+
+{ #category : #'*PharoFunctional' }
+SequenceableCollection >> groupByRunsTrue: aBlock [
 	"Answer a new collection of the same species as the receiver with elements being collections (of the receiver species) containing those elements of the receiver for which the given block applied to 2 consecutive values evaluates to true."
 
 	"(#(1 2 3 4 4 1 1) groupByRuns2Arg: [ :l :r | l = r]) >>> #((1) (2) (3) (4 4) (1 1))"
@@ -81,13 +109,13 @@ SequenceableCollection >> groupByRuns2Arg: aBlock [
 	self do: [ :e |
 			(compare and: [ aBlock value: prev value: e ]) ifFalse: [
 					eStr isEmpty ifFalse: [
-						str nextPut: (eStr contents as: self species).
+						str nextPut: eStr contents.
 						eStr reset ] ].
 			eStr nextPut: e.
 			compare := true.
 			prev := e.
 	].
-	eStr isEmpty ifFalse: [ str nextPut: (eStr contents as: self species) ].
+	eStr isEmpty ifFalse: [ str nextPut: eStr contents ].
 	^ str contents
 ]
 

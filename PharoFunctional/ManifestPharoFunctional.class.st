@@ -9,7 +9,7 @@ Class {
 
 { #category : #'code-critics' }
 ManifestPharoFunctional class >> ruleModifiesCollectionRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#SequenceableCollection #groupByRuns2Arg: #false)) #'2020-11-04T18:04:28.635305-05:00') )
+	^ #(#(#(#RGMethodDefinition #(#SequenceableCollection #groupByRunsTrue: #false)) #'2020-11-04T18:04:28.635305-05:00') )
 ]
 
 { #category : #'code-critics' }

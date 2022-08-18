@@ -13,8 +13,11 @@ CollectionFunctionalTest >> testFrequencies [
 
 { #category : #tests }
 CollectionFunctionalTest >> testGrouping [
-	self assert: 	(#(1 2 3 4 4 1 1) groupByRuns2Arg: [ :l :r | l = r]) equals: #((1) (2) (3) (4 4) (1 1)).
-	self assert: (#(1 2 3 4 1 2 3 3 4 5 1 ) groupByRuns2Arg: #<=) equals: #((1 2 3 4) (1 2 3 3 4 5) (1)).
+	self assert: (#(1 2 3 4 4 1 1) groupByRunsTrue: [ :l :r | l = r]) equals: #((1) (2) (3) (4 4) (1 1)).
+	self assert: (#(1 2 3 4 4 1 1) groupByRunsEqual: [ :v | v < 3]) equals: #((1 2) (3 4 4) (1 1)).
+	self assert: (#(1 2 3 4 1 2 3 3 4 5 1 ) groupByRunsTrue: #<=) equals: #((1 2 3 4) (1 2 3 3 4 5) (1)).
+	self assert: (#(1 2 3 4 4 2 3 1 1) groupByRunsEqual: [ :v | v bitAnd: 1]) equals: #((1) (2) (3) (4 4 2) (3 1 1)).
+
 ]
 
 { #category : #tests }
