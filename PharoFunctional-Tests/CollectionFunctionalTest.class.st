@@ -1,6 +1,8 @@
 Class {
 	#name : #CollectionFunctionalTest,
 	#superclass : #TestCase,
+	#traits : 'ComposeSyntax',
+	#classTraits : 'ComposeSyntax classTrait',
 	#category : #'PharoFunctional-Tests-Tests'
 }
 
