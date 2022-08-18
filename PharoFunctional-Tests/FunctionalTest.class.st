@@ -1,6 +1,8 @@
 Class {
 	#name : #FunctionalTest,
 	#superclass : #TestCase,
+	#traits : 'ComposeSyntax',
+	#classTraits : 'ComposeSyntax classTrait',
 	#category : #'PharoFunctional-Tests-Tests'
 }
 
@@ -17,6 +19,41 @@ FunctionalTest >> testCombinations [
 	self assert: (3 iota combinationsOf: 2 select: [: each | each sum = 4]) equals: #((1 3)).
 	self assert: (3 iota combinationsOf: 2 select: [: each | each sum = 4] collect: [: each | each first]) equals: #(1).
 	self assert: (3 iota combinationsOf: 2 collect: [: each | each sum]) asSet equals: #(3 4 5) asSet.
+
+]
+
+{ #category : #tests }
+FunctionalTest >> testCombinatorAtop [ 
+	"The Blackbird"
+
+   "Example #1: Test if two sequences are mutually exclusive"
+   "Not using combinators"
+   self deny: (#(1 2 3) intersection: #(2 3 4)) isEmpty.
+   self assert: (#(1 2 3) intersection: #(4 5 6)) isEmpty.
+	"Using combinators"
+   self deny: #(1 2 3) (#isEmpty <|> #intersection:): #(2 3 4).
+   self assert: #(1 2 3) (#isEmpty <|> #intersection:): #(4 5 6)
+
+]
+
+{ #category : #tests }
+FunctionalTest >> testCombinatorOver [
+	"The Psi Bird"
+
+   "Example #1: Test the difference in length of string"
+   "Not using combinators"
+   self assert: (('mouse' size) - ('cat' size)) equals: 2.
+	"Using combinators"
+   self assert: ('mouse' (#- <|> #size): 'cat') equals: 2.
+
+	"Example #2: Test if strings are anagrams"
+	"Not using combinators"
+	self deny: (('horse' sorted) = ('cat' sorted)).
+   self assert: (('horse' sorted) = ('shore' sorted)).
+	"Using combinators"
+   self deny: 'horse' (#= <|> #sorted): 'cat'.
+   self assert: 'horse' (#= <|> #sorted): 'shore'
+
 
 ]
 
