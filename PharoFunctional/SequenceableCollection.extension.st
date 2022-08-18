@@ -77,7 +77,7 @@ SequenceableCollection >> groupByRuns2Arg: aBlock [
 	str := Array new writeStream.
 	prev := nil.
 	compare := false.
-	eStr := Array new writeStream.
+	eStr := self species new writeStream.
 	self do: [ :e |
 			(compare and: [ aBlock value: prev value: e ]) ifFalse: [
 					eStr isEmpty ifFalse: [
@@ -88,7 +88,7 @@ SequenceableCollection >> groupByRuns2Arg: aBlock [
 			prev := e.
 	].
 	eStr isEmpty ifFalse: [ str nextPut: (eStr contents as: self species) ].
-	^ str contents as: self species
+	^ str contents
 ]
 
 { #category : #'*PharoFunctional' }
