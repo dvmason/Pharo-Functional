@@ -58,6 +58,31 @@ FunctionalTest >> testCombinatorOver [
 ]
 
 { #category : #tests }
+FunctionalTest >> testCombinatorOverWithGroupByRuns2Arg [
+   "These algorithms are important:
+    groupByRuns      -> chunk_by_key       C++26
+    groupByRuns2Arg: -> chunk_by (groupBy) C++23
+    groupsOf:        -> chunk              C++23"
+
+	| aplExpr isDigitOrSpace expected |
+
+   "groupByRuns2Arg: doesn't work with strings ATM
+    isDigitOrSpace := [ :c | (c isDigit) or: [ c == $ ] ].
+    aplExpr        := 'max fold 1 + 1 2 3 4 5'" 
+
+   aplExpr        := #(2 1 3 1 3 1 4 1 3 4 3 1).
+   isDigitOrSpace := [ :x | (x == 1) or: [ x == 3 ] ].
+   expected       := #((2) (1 3 1 3 1) (4) (1 3) (4) (3 1)).
+
+	self assert: (aplExpr groupByRuns2Arg: [ :a :b | ((a == 1) or: [ a == 3 ]) and: [ (b == 1) or: [ b == 3 ] ]]) equals: expected.
+	self assert: (aplExpr groupByRuns2Arg: [ :a :b | ( isDigitOrSpace value: a ) and: [ isDigitOrSpace value: b ] ]) equals: expected.
+	self assert: (aplExpr groupByRuns2Arg: [ :a :b | a (isDigitOrSpace) and: [ b (isDigitOrSpace) ] ]) equals: expected.
+   self assert: (aplExpr groupByRuns2Arg: [ :a : b| a (#and: <|> isDigitOrSpace): b ]) equals: expected.
+   self assert: (aplExpr groupByRuns2Arg: (#and: <|> isDigitOrSpace)) equals: expected.
+
+]
+
+{ #category : #tests }
 FunctionalTest >> testCurry [
 	self assert: (5 @@ #- value: 4) equals: 1.
 	self assert: (#- @@ 4 value: 9) equals: 5.
