@@ -129,7 +129,7 @@ SequenceableCollection >> slide: width [
    | start end result |
    start   := 1.
    end   := width.
-   result := self species ofSize: self size - width +1.
+   result := Array new: self size - width +1.
    [ end > self size ] whileFalse: [
 	   result at: start put: (self copyFrom: start to: end).
 	   start := start + 1.

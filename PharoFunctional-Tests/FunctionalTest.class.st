@@ -9,6 +9,7 @@ Class {
 { #category : #tests }
 FunctionalTest >> testAdjacentFind [
 	self assert: (#(1 2 3 3 1 1 4) adjacentFind: #=) first equals: 3.
+	self assert: ('abccaad' adjacentFind: #=) first equals: $c.
 	self assert: ((#(1 2 3) adjacentFind: #=) nilOr: #first) equals: nil.
 
 ]
@@ -16,7 +17,10 @@ FunctionalTest >> testAdjacentFind [
 { #category : #tests }
 FunctionalTest >> testCombinations [
 	self assert: (3 iota combinationsOf: 2) asSet equals: #((1 2) (1 3) (2 3)) asSet.
+	self assert: ('abc' combinationsOf: 2) asSet equals: #('ab' 'ac' 'bc') asSet. " depends on SequencableCollection>>#combinations:atATimeDo: using `self species` "
 	self assert: (3 iota combinationsOf: 2 select: [: each | each sum = 4]) equals: #((1 3)).
+	self assert: ('abcde' combinationsOf: 2 select: [: each | each allSatisfy: #isVowel]) equals: #('ae').
+	self assert: ('abcde' combinationsOf: 2 select: #allSatisfy: @@ #isVowel) equals: #('ae').
 	self assert: (3 iota combinationsOf: 2 select: [: each | each sum = 4] collect: [: each | each first]) equals: #(1).
 	self assert: (3 iota combinationsOf: 2 collect: [: each | each sum]) asSet equals: #(3 4 5) asSet.
 
@@ -48,8 +52,8 @@ FunctionalTest >> testCombinatorOver [
 
 	"Example #2: Test if strings are anagrams"
 	"Not using combinators"
-	self deny: (('horse' sorted) = ('cat' sorted)).
-   self assert: (('horse' sorted) = ('shore' sorted)).
+	self deny: ('horse' sorted = 'cat' sorted).
+   self assert: ('horse' sorted = 'shore' sorted).
 	"Using combinators"
    self deny: 'horse' (#= <|> #sorted): 'cat'.
    self assert: 'horse' (#= <|> #sorted): 'shore'
@@ -60,7 +64,9 @@ FunctionalTest >> testCombinatorOver [
 { #category : #tests }
 FunctionalTest >> testCurry [
 	self assert: (5 @@ #- value: 4) equals: 1.
+	self assert: 4 (5 @@ #-) equals: 1.
 	self assert: (#- @@ 4 value: 9) equals: 5.
+	self assert: 9 (#- @@ 4) equals: 5.
 	self assert: ((5 curry: #-) value: 4) equals: 1.
 	self assert: ((#- curry: 4) value: 9) equals: 5.
 	self assert: ((5 curry: [:l :r | l-r]) value: 4) equals: 1.
@@ -73,7 +79,8 @@ FunctionalTest >> testCycle [
    self assert: (#(1 2 3 4) cycle: 2)  equals: #(1 2).
    self assert: (#(1 2 3 4) cycle: 3)  equals: #(1 2 3).
    self assert: (#(1 2 3 4) cycle: 6)  equals: #(1 2 3 4 1 2).
-   self assert: (#(1 2 3 4) cycle: 10) equals: #(1 2 3 4 1 2 3 4 1 2)
+   self assert: (#(1 2 3 4) cycle: 10) equals: #(1 2 3 4 1 2 3 4 1 2).
+   self assert: ('abcd' cycle: 6)  equals: 'abcdab'.
 ]
 
 { #category : #tests }
@@ -102,6 +109,7 @@ FunctionalTest >> testReplace [
 FunctionalTest >> testSlide [
 	self assert: (5 iota slide: 3) asArray equals: #((1 2 3) (2 3 4) (3 4 5)).
 	self assert: (5 iota slide: 2) asArray equals: #((1 2) (2 3) (3 4) (4 5)).
+	self assert: ('abcde' slide: 2) asArray equals: #('ab' 'bc' 'cd' 'de').
 
 ]
 
@@ -109,5 +117,6 @@ FunctionalTest >> testSlide [
 FunctionalTest >> testUnique [
    self assert: (3 iota,5 iota) unique equals: #(1 2 3 4 5).
    self assert: (#(3 1),4 iota reversed,3 iota,5 iota) unique equals: #(3 1 4 2 5).
+   self assert: 'cadcbaabcabcde' unique equals: 'cadbe'.
 
 ]
