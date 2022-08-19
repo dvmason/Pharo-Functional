@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #'code-critics' }
+ManifestPharoFunctionalTests class >> ruleAssertEqualSignIntoAssertEqualsV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#FunctionalTest #testCombinatorOver #false)) #'2022-08-19T16:06:26.915828-04:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestPharoFunctionalTests class >> ruleExtraBlockRuleV1FalsePositive [
 	^ #(#(#(#RGPackageDefinition #(#'PharoFunctional-Tests')) #'2020-11-22T12:02:47.703658-05:00') )
 ]
