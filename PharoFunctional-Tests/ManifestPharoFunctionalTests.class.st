@@ -21,3 +21,8 @@ ManifestPharoFunctionalTests class >> ruleExtraBlockRuleV1FalsePositive [
 ManifestPharoFunctionalTests class >> ruleLongMethodsRuleV1FalsePositive [
 	^ #(#(#(#RGClassDefinition #(#TupleTest)) #'2020-10-21T23:34:04.860994-04:00') )
 ]
+
+{ #category : #'code-critics' }
+ManifestPharoFunctionalTests class >> ruleSearchingLiteralRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#FunctionalTest #testCombinatorOverWithGroupByRuns2Arg #false)) #'2022-08-23T14:18:52.916185+02:00') )
+]
