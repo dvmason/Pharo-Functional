@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #'code-critics' }
+ManifestPharoFunctional class >> ruleExcessiveArgumentsRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#'Tuple class' #with:with:with:with:with:withh: #true)) #'2022-08-24T06:58:09.398499+02:00') #(#(#RGMethodDefinition #(#'Tuple class' #with:with:with:with:with: #true)) #'2022-08-24T06:58:14.662804+02:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestPharoFunctional class >> ruleModifiesCollectionRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#SequenceableCollection #groupByRunsTrue: #false)) #'2020-11-04T18:04:28.635305-05:00') )
 ]

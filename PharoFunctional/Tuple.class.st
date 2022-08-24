@@ -32,8 +32,39 @@ Tuple class >> with: first with: second with: third [
 ]
 
 { #category : #'instance creation' }
+Tuple class >> with: first with: second with: third with: fourth [
+
+	^ (self new: 4) initializeWith: { 
+			  first.
+			  second.
+			  third. fourth }
+]
+
+{ #category : #'instance creation' }
+Tuple class >> with: first with: second with: third with: fourth with: fifth [
+
+	^ (self new: 5) initializeWith: { 
+			  first.
+			  second.
+			  third.
+			  fourth. fifth }
+]
+
+{ #category : #'instance creation' }
+Tuple class >> with: first with: second with: third with: fourth with: fifth withh: sixth [
+
+	^ (self new: 5) initializeWith: { 
+			  first.
+			  second.
+			  third.
+			  fourth.
+			  fifth. sixth }
+]
+
+{ #category : #'instance creation' }
 Tuple class >> withAll: aCollection [
-	^ (self new: aCollection size) initializeWith: (aCollection collect: #yourself into: (Array new: aCollection size))
+
+	^ (self new: aCollection size) initializeWith: aCollection
 ]
 
 { #category : #adding }

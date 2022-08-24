@@ -50,6 +50,14 @@ Pair >> first [
 	^ first
 ]
 
+{ #category : #accessing }
+Pair >> firstNamed: unused [
+
+	"Answer the first element of the receiver"
+
+	^ first
+]
+
 { #category : #initialization }
 Pair >> initializeWith: anInteger with: anInteger2 [ 
 	first := anInteger.
@@ -69,6 +77,14 @@ Pair >> replaceFrom: start to: stop with: source startingAt: repStart [
 
 { #category : #accessing }
 Pair >> second [
+	^ second
+]
+
+{ #category : #accessing }
+Pair >> secondNamed: unused [
+
+	"Answer the second element of the receiver"
+
 	^ second
 ]
 
