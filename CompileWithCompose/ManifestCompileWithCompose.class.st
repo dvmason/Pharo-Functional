@@ -9,7 +9,7 @@ Class {
 
 { #category : #'code-critics' }
 ManifestCompileWithCompose class >> ruleLongMethodsRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#ComposeParser #parseArray #false)) #'2022-08-04T16:17:30.361051-04:00') )
+	^ #(#(#(#RGMethodDefinition #(#ComposeParser #parseArray #false)) #'2022-08-04T16:17:30.361051-04:00') #(#(#RGMethodDefinition #(#ComposeParser #parseTemporariesInto: #false)) #'2022-08-24T06:15:37.906011+02:00') )
 ]
 
 { #category : #'code-critics' }

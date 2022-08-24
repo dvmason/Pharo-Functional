@@ -241,6 +241,38 @@ ComposeParser >> parsePipeOrCascadeMessage [
 
 ]
 
+{ #category : #'private - parsing' }
+ComposeParser >> parseTemporariesInto: aSequenceNode [
+
+	| temps leftBar rightBar errorNode startToken |
+	temps := OrderedCollection new.
+	leftBar := rightBar := nil.
+	currentToken isBinary ifTrue: [ 
+		currentToken value = #|
+			ifTrue: [ 
+				startToken := currentToken.
+				leftBar := currentToken start.
+				self step.
+				temps := self parseTempsWithAssignmentsInto: aSequenceNode.
+				(currentToken isBinary and: [ currentToken value = #| ])
+					ifFalse: [ 
+						errorNode := self
+							             parseEnglobingError: temps
+							             with: startToken
+							             errorMessage: '''|'' expected'.
+						aSequenceNode addFaultyNode: errorNode.
+						temps := OrderedCollection new.
+						leftBar := nil ]
+					ifTrue: [ rightBar := currentToken start ].
+				self step ]
+			ifFalse: [ 
+				currentToken value = #'||' ifTrue: [ 
+					rightBar := (leftBar := currentToken start) + 1.
+					self step ] ] ].
+
+	aSequenceNode leftBar: leftBar temporaries: temps rightBar: rightBar
+]
+
 { #category : #parsing }
 ComposeParser >> parseTempsWithAssignmentsInto: aSequenceNode [
 
