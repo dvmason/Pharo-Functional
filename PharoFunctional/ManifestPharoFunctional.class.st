@@ -26,3 +26,8 @@ ManifestPharoFunctional class >> ruleRBBadMessageRuleV1FalsePositive [
 ManifestPharoFunctional class >> ruleRBToDoCollectRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#Integer #iota: #false)) #'2020-03-09T08:09:54.106096-04:00') )
 ]
+
+{ #category : #'code-critics' }
+ManifestPharoFunctional class >> ruleUtilityMethodsRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#SequenceableCollection #destructure: #false)) #'2022-08-24T11:38:20.623353+02:00') #(#(#RGMethodDefinition #(#SequenceableCollection #sliceFrom:to: #false)) #'2022-08-24T13:04:19.460538+02:00') #(#(#RGMethodDefinition #(#BlockClosure #map: #false)) #'2022-08-24T13:04:42.171949+02:00') )
+]
