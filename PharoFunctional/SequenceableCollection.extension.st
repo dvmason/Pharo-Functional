@@ -125,6 +125,11 @@ SequenceableCollection >> isUnique [
 ]
 
 { #category : #'*PharoFunctional' }
+SequenceableCollection >> sliceFrom: start to: end [
+	^ Slice new collection: self from: start to: end
+]
+
+{ #category : #'*PharoFunctional' }
 SequenceableCollection >> slide: width [
    | start end result |
    start   := 1.

@@ -23,7 +23,8 @@ Tuple class >> with: first [
 
 { #category : #'instance creation' }
 Tuple class >> with: first with: second [
-	^ (Pair new: 2) initializeWith: first with: second
+
+	^ Pair with: first with: second
 ]
 
 { #category : #'instance creation' }

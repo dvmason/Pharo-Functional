@@ -27,6 +27,12 @@ BlockClosure >> curry: anObject [
 ]
 
 { #category : #'*PharoFunctional' }
+BlockClosure >> map: aCollection [
+
+	^ aCollection collect: self
+]
+
+{ #category : #'*PharoFunctional' }
 BlockClosure >> map: aCollection map: anotherCollection [
 	^ aCollection with: anotherCollection collect: self
 ]

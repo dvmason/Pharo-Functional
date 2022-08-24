@@ -21,7 +21,8 @@ Pair class >> new: anInteger [
 
 { #category : #'instance creation' }
 Pair class >> with: first with: second [
-	^ (self new: 2) initializeWith: first with: second
+
+	^ (self basicNew) initializeWith: first with: second
 ]
 
 { #category : #applying }

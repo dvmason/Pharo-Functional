@@ -39,6 +39,23 @@ CollectionFunctionalTest >> testScan [
 ]
 
 { #category : #tests }
+CollectionFunctionalTest >> testSlice [
+
+	| slice |
+	slice := (#( 1 2 3 4 5 6 7 8 ) collect: #yourself) sliceFrom: 2 to: 5.
+	self assert: (slice collect: #negated) equals: #( -2 -3 -4 -5 ).
+	self assert: slice size equals: 4.
+	self should: [ slice at: 3 put: 42 ] raise: Error.
+	slice mutable.
+	slice at: 3 put: 42.
+	self assert: slice reversed asArray equals: #( 5 42 3 2 ).
+	slice reversed at: 3 put: 17.
+	self assert: slice asArray equals: #( 2 17 42 5 ).
+	self should: [ slice at: 0 put: 42 ] raise: Error.
+	self should: [ slice at: 5 put: 42 ] raise: Error
+]
+
+{ #category : #tests }
 CollectionFunctionalTest >> testValueValue [
 	self assert: (#(1 2 3 4) with: #(2 4 6 8) collect: #+) equals: #(3 6 9 12).
 	self assert: (#(1 2 3 4) with: #(2 4 6 8) collect: #bitOr:) equals: #(3 6 7 12).
