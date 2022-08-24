@@ -1,5 +1,5 @@
 "
-I am a toke that represents the :> compose or pipe syntax
+I am a token that represents the :> compose or pipe syntax
 "
 Class {
 	#name : #ComposePipeToken,

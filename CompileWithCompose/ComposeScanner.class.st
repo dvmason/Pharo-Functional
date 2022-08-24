@@ -42,18 +42,25 @@ ComposeScanner >> scanIdentifierOrKeyword [
 
 { #category : #'private - scanning' }
 ComposeScanner >> scanSpecialCharacter [
-	currentCharacter = $: 
-		ifTrue: [
-			self step.
-			^ currentCharacter = $= 
-				ifTrue: [
-					self step.
-					RBAssignmentToken start: tokenStart]
-				ifFalse: [currentCharacter = $>
-					ifTrue: [
-						self step.
-						ComposePipeToken start: tokenStart]
-					ifFalse: [ RBSpecialCharacterToken value: $: start: tokenStart ]]].
+
+	currentCharacter = $: ifTrue: [ 
+		self step.
+		^ currentCharacter = $=
+			  ifTrue: [ 
+				  self step.
+				  RBAssignmentToken start: tokenStart ]
+			  ifFalse: [ 
+				  currentCharacter = $>
+					  ifTrue: [ 
+						  self step.
+						  ComposePipeToken start: tokenStart ]
+					  ifFalse: [ 
+						  currentCharacter = $|
+							  ifTrue: [ 
+								  self step.
+								  ComposeColonBarToken start: tokenStart ]
+							  ifFalse: [ 
+							  RBSpecialCharacterToken value: $: start: tokenStart ] ] ] ].
 
 	^ super scanSpecialCharacter
 ]

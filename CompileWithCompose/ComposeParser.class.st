@@ -5,7 +5,8 @@ Class {
 	#name : #ComposeParser,
 	#superclass : #RBParser,
 	#instVars : [
-		'pendingBinaryOperator'
+		'pendingBinaryOperator',
+		'anonvariableNumber'
 	],
 	#category : #'CompileWithCompose-Kernel'
 }
@@ -74,19 +75,21 @@ ComposeParser >> parseArray [
 
 { #category : #'private - parsing' }
 ComposeParser >> parseAssignment [
+
 	"Need one token lookahead to see if we have a ':='. This method could 
 	make it possible to assign the literals true, false and nil."
 
 	| node position |
-	(currentToken isIdentifier and: [self nextToken isAssignment]) 
-		ifFalse: [^self parsePipeOrCascadeMessage].
+	(currentToken isIdentifier and: [ self nextToken isAssignment ]) 
+		ifFalse: [ currentToken isDestructure ifTrue: [^ self parseDestructure].
+			^ self parsePipeOrCascadeMessage ].
 	node := self parseVariableNode.
 	position := currentToken start.
 	self step.
-	^self assignmentNodeClass 
-		variable: node
-		value: self parseAssignment
-		position: position
+	^ self assignmentNodeClass
+		  variable: node
+		  value: self parseAssignment
+		  position: position
 ]
 
 { #category : #'private - parsing' }
@@ -136,6 +139,42 @@ ComposeParser >> parseBinaryMessageWith: aNode [
 		  arguments: { 
 				  aNode.
 				  self parseUnaryMessage }
+]
+
+{ #category : #parsing }
+ComposeParser >> parseDestructure [
+
+	| identifiers expression variable |
+	self step.
+	identifiers := self parseTemps.
+	self step.
+	self step.
+	expression := self parseAssignment.
+	anonvariableNumber := anonvariableNumber
+		                      ifNil: [ 1 ]
+		                      ifNotNil: [ anonvariableNumber + 1 ].
+	variable := self variableNodeClass named:
+		            #_temp_ , anonvariableNumber asString.
+	^ self messageNodeClass
+		  receiver: (self blockNodeClass
+				   arguments: { variable }
+				   body: (self sequenceNodeClass statements: (identifiers
+							     with:
+								     (#( firstNamed: secondNamed: thirdNamed: fourthNamed:
+								         fifthNamed: sixthNamed: seventhNamed: eighthNamed:
+								         ninthNamed: ) first: identifiers size)
+							     collect: [ :id :sel | 
+								     self assignmentNodeClass
+									     variable: id
+									     value: (self messageNodeClass
+											      receiver: variable
+											      selector: sel
+											      arguments:
+											      (OrderedCollection with:
+												       (self literalNodeClass value: id name))) ])
+						    , { variable }))
+		  selector: #value:
+		  arguments: (OrderedCollection with: expression)
 ]
 
 { #category : #'private - parsing' }
@@ -200,6 +239,26 @@ ComposeParser >> parsePipeOrCascadeMessage [
 	].
 	^ self cascadeNodeWithMessages: messages semicolons: semicolons
 
+]
+
+{ #category : #parsing }
+ComposeParser >> parseTempsWithAssignmentsInto: aSequenceNode [
+
+	| temps identifier position |
+	temps := OrderedCollection new.
+	[ currentToken isIdentifier ] whileTrue: [ 
+		identifier := self parsePrimitiveIdentifier.
+		temps add: identifier.
+		currentToken isAssignment ifTrue: [ 
+			position := currentToken start.
+			self step.
+			aSequenceNode addNode: (self assignmentNodeClass
+				variable: identifier
+				value: self parseAssignment
+				position: position) ].
+		(currentToken isSpecial and: [ currentToken value = $. ]) ifTrue: [ 
+			self step ] ].
+	^ temps
 ]
 
 { #category : #'private - parsing' }

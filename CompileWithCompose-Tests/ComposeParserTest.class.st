@@ -88,8 +88,11 @@ ComposeParserTest >> testCollectionLiterals [
 
 { #category : #tests }
 ComposeParserTest >> testDesctructureCollection [
-	self assertMessage: (self parserClass parseExpression: ' :| x y z | := w ') equals: #(yourself msg self).
 
+	self
+		assertMessage:
+		(self parserClass parseExpression: ' :| x y z | := [:z| x:= z firstNamed: #x.x:= y secondNamed: #y. z] value: w ')
+		equals: #( value: )
 ]
 
 { #category : #tests }
@@ -98,11 +101,11 @@ ComposeParserTest >> testParenSelector [
 	self
 		assertMessage:
 		(self parserClass parseExpression: ' self (msg yourself) xxx')
-		equals: #( yourself msg self ).
+		equals: #( xxx value: yourself ).
 	self
 		assertMessage:
 		(self parserClass parseExpression: ' self (arg msg:arg): xxx')
-		equals: #( yourself msg: self )
+		equals: #( value:value: msg: )
 ]
 
 { #category : #tests }
@@ -114,4 +117,16 @@ ComposeParserTest >> testPipe [
 	self assertMessage: ( self parserClass parseExpression: ' (self) :> yourself' ) equals: #(yourself self).
 	self assertMessage: (self parserClass parseExpression: ' self msg:(arg msg:arg); msg2: self :> yourself') equals: #(yourself (msg: msg2:) self).
 
+]
+
+{ #category : #tests }
+ComposeParserTest >> testTemps [
+
+	| parse |
+	parse := self parserClass parseExpression: ' [|a . b := 42.|]'.
+	self assert: parse isBlock.
+	self assert: parse temporaries size equals: 2.
+	self assert: parse statements size equals: 1.
+	parse := self parserClass parseMethod: ' foo |a.b|'.
+	self assert: parse isMethod
 ]

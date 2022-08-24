@@ -14,6 +14,15 @@ ComposeExampleTest >> testArrayLiterals [
 ]
 
 { #category : #tests }
+ComposeExampleTest >> testAssignDeclarations [
+	| a b := 40|2. c|
+	self assert: a isNil.
+	self assert: b equals: 42.
+	self assert: c isNil.
+
+]
+
+{ #category : #tests }
 ComposeExampleTest >> testBlockOperators [
 	self assert: 3 [ :x | x*14 ] equals: 42.
 	self assert: 3 [ :x :y | x*y*2 ] 7 equals: 42.
@@ -31,6 +40,28 @@ ComposeExampleTest >> testCompose [
 		:> and: [ 4 > 2 ]
 		:> and: [ 5 < 10 ]
 		:> ifTrue: [ 42 ] ifFalse: [ 99 ]) equals: 42
+]
+
+{ #category : #tests }
+ComposeExampleTest >> testDestructure [
+	| x y z w |
+	w := :| x y z | := #(99 42 17).
+	self assert: x equals: 99.
+	self assert: y equals: 42.
+	self assert: z equals: 17.
+	self assert: w equals: #(99 42 17).
+	:| x y z | := {:Dictionary #a -> 12. #x -> 42. #y -> 17. #z -> 99}.
+	self assert: x equals: 42.
+	self assert: y equals: 17.
+	self assert: z equals: 99.
+	:| x y | := { :Bag #x. #y. #x. #x. #y }.
+	self assert: x equals: 3.
+	self assert: y equals: 2.
+	:| x y z | := { :Set #x. #x. #z }.
+	self assert: x.
+	self deny: y.
+	self assert: z.
+
 ]
 
 { #category : #tests }
