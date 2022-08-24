@@ -114,6 +114,7 @@ ComposeExampleTest >> testSimple2 [
 	self assert: (ComposeExample new first: 5; > 3).
 	self assert: (ComposeExample new first: 5 :> > 3).
 	self deny:   (ComposeExample new first: 5; second: 1 :> > 3).
+	self assert: (ComposeExample new first: 5; second: 1; yourself :> > 3).
 	self assert: (ComposeExample new first: 5; second: 1; > 3).
 
 ]

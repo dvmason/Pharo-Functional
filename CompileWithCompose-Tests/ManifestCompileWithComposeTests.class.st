@@ -21,3 +21,8 @@ ManifestCompileWithComposeTests class >> ruleLongMethodsRuleV1FalsePositive [
 ManifestCompileWithComposeTests class >> ruleTempsReadBeforeWrittenRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#ComposeExampleTest #testAssignDeclarations #false)) #'2022-08-24T05:20:07.12452+02:00') #(#(#RGMethodDefinition #(#ComposeExampleTest #testDestructure #false)) #'2022-08-24T06:11:34.470254+02:00') )
 ]
+
+{ #category : #'code-critics' }
+ManifestCompileWithComposeTests class >> ruleUnoptimizedAndOrRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#ComposeExampleTest #testCompose #false)) #'2022-08-24T06:18:25.790093+02:00') )
+]

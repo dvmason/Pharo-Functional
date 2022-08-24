@@ -92,6 +92,8 @@ FunctionalTest >> testCurry [
 	self assert: 4 (5 @@ #-) equals: 1.
 	self assert: (#- @@ 4 value: 9) equals: 5.
 	self assert: 9 (#- @@ 4) equals: 5.
+	self assert: 4 (5 curry: #-) equals: 1.
+	self assert: 9 (#- curry: 4) equals: 5.
 	self assert: ((5 curry: #-) value: 4) equals: 1.
 	self assert: ((#- curry: 4) value: 9) equals: 5.
 	self assert: ((5 curry: [:l :r | l-r]) value: 4) equals: 1.
@@ -120,14 +122,14 @@ FunctionalTest >> testProduct [
 
 { #category : #tests }
 FunctionalTest >> testReplace [
+
 	| x dict |
-	x := 'abc','defd'.
-	dict := {$a->$z . $d->$w} asDictionary.
+	x := 'abc' , 'defd'.
+	dict := {:Dictionary $a -> $z. $d -> $w }.
 	self assert: (x copyReplace: dict) equals: 'zbcwefw'.
 	self assert: x equals: 'abcdefd'.
 	self assert: (x replace: dict) equals: 'zbcwefw'.
-	self assert: x equals: 'zbcwefw'.
-
+	self assert: x equals: 'zbcwefw'
 ]
 
 { #category : #tests }
