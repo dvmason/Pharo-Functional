@@ -34,7 +34,6 @@ x := OrderedCollection new
         :> max
 ```
 
-## Proposed syntax extensions
 ### Expressions as unary or binary messages
 A proposed extension adds a syntax to support composing blocks or symbols with combinators. This can be very convenient when used with the parrot operator, as well as `curry:` and some other messages from the Pharo-Functional part of this repository. This reduces the amount of visual noise from `value:` and `value:value:` messages. Anywhere a unary messsage can go, you can instead put an expression in parentheses or put a block. Anywhere a binary message can go, you can do the same, but follow the close-parenthesis with a colon (`:`). This is extremely useful with the combinators described later.
 
@@ -65,23 +64,6 @@ If you had a unary or binary block in a variable, you could use it with the pare
 ```smalltalk
 a: aBlock
    ^ 42 (aBlock): 17
-```
-
-### Currying (partial expressions)
-`curry:` is very convenient to partially apply parameters to a binary operator. And of course the binary operator could be any of the above operators:
-```smalltalk
-x := (3+).
-y := (*4).
-```
-would become:
-```smalltalk
-x := [:temp| 3+temp].
-y := [:temp| temp*4].
-```
-
-These are very convenient to use with the parrot operator:
-```smalltalk
-x :> + 3 :> (...): 7 :> [...] y :> (4-) :> - 4
 ```
 
 ### Initializing local variables at point of declaration
@@ -121,7 +103,26 @@ which would destructure the 3 elements of a SequenceableCollection or would extr
 	b := temp secondNamed: #b.
 	c := temp thirdNames: #c] value: some-collection)
 ```
-These `firstNamed:`, etc. methods would be trivial to implement in those collection classes and also other classes could handle them if appropriate. Using this syntax will also define those local vaiables in the nearest enclosing scope if they aren't already accessible.
+These `firstNamed:`, etc. methods would be trivial to implement in those collection classes and also other classes could handle them if appropriate. A nice estension might be for this syntax to also define those local variables in the nearest enclosing scope if they aren't already accessible.
+
+## Proposed syntax extensions
+While these might be convenient, they really would need a more generalized syntax, and even this simple version is hard to compile.
+### Currying (partial expressions)
+`curry:` is very convenient to partially apply parameters to a binary operator. And of course the binary operator could be any of the above operators:
+```smalltalk
+x := (3+).
+y := (*4).
+```
+would become:
+```smalltalk
+x := [:temp| 3+temp].
+y := [:temp| temp*4].
+```
+
+These are very convenient to use with the parrot operator:
+```smalltalk
+x :> + 3 :> (...): 7 :> [...] y :> (4-) :> - 4
+```
 
 ## How to use this
 You can load into a Pharo image Playground with:
@@ -155,7 +156,7 @@ This project is to add to Smalltalk additional data structures and methods that 
 ## Tuple class
 It includes Tuple class, which is a read-only Array.
 
-## Extended Symbols suport
+## Extended Symbols support
 It makes Symbols work as unary, binary, ternary, or quatrenary operators
 
 It adds a unary and binary `map:` and `map:map:` to symbols, so:
