@@ -14,6 +14,18 @@ BlockClosure >> <*> aBlock [
 ]
 
 { #category : #'*PharoFunctional' }
+BlockClosure >> <-> aBlock [
+
+	| a b |
+	a := self numArgsAsBlock.
+	b := aBlock numArgsAsBlock.
+	(a + b = 3 and: (a min: b) > 0) ifFalse: [ ^ ArityError signal ].
+	"This is the D combinator also known as the Dove bird"
+	a = 2 ifTrue: [ ^ [ :x :y | self value: x value: (aBlock value: y) ] ].
+	^ [ :x :y | aBlock value: (self value: x) value: y ]
+]
+
+{ #category : #'*PharoFunctional' }
 BlockClosure >> <| aFullBlockClosure [
    (self numArgsAsBlock = 1 and:
        aFullBlockClosure numArgsAsBlock = 1) ifFalse: [ 
@@ -43,10 +55,11 @@ BlockClosure >> numArgsAsBlock [
 ]
 
 { #category : #'*PharoFunctional' }
-BlockClosure >> |> aFullBlockClosure [
-   "This is the B combinator also known as the Bluebird"
-   (self numArgsAsBlock = 1 and:
-       aFullBlockClosure numArgsAsBlock = 1) ifFalse: [ 
-      ^ ArityError signal ].
-   ^ [ :x | aFullBlockClosure value: (self value: x) ]
+BlockClosure >> |> aBlock [
+
+	"This is the B combinator also known as the Bluebird"
+
+	(self numArgsAsBlock = 1 and: aBlock numArgsAsBlock = 1) 
+		ifFalse: [ ^ ArityError signal ].
+	^ [ :x | aBlock value: (self value: x) ]
 ]
