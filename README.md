@@ -34,6 +34,8 @@ x := OrderedCollection new
         :> max
 ```
 
+### Point-free programming is interesting
+It's somewhat common in the functional and array-processing world. Several of the extensions here support it. Here is a link to an old article about it: http://smalltalkthoughts.blogspot.com/2011/08/point-free-programming-in-smalltalk.html
 ### Expressions as unary or binary messages
 A proposed extension adds a syntax to support composing blocks or symbols with combinators. This can be very convenient when used with the parrot operator, as well as `curry:` and some other messages from the Pharo-Functional part of this repository. This reduces the amount of visual noise from `value:` and `value:value:` messages. Anywhere a unary messsage can go, you can instead put an expression in parentheses or put a block. Anywhere a binary message can go, you can do the same, but follow the close-parenthesis with a colon (`:`). This is extremely useful with the combinators described later.
 
