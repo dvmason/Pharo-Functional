@@ -205,6 +205,27 @@ foo
 		; and: [ 5 < 10 ]
 		; ifTrue: [ 42 ] ifFalse: [ 99 ]
 ```
+## combinators
+Combinators allow combining blocks and symbols to produce new operators. This is more useful when combined with using expressions are operators (see above)
+### `a id`
+This is the identity combinator (I). It simply returns the passed value. This is useful in combination with other combinators.
+### `a |> b`
+This is the B combinator. It combines two blocks/symbols, applying the second after the first, so `a |> b` is equivalent to `[:x| b value: (a value: x)]`. It is an operator equivalent to the `:>` parrot syntax.
+### `a <| b`
+This is the Q combinator known as the Queer Bird. `a <| b` is equivalent to `[:x | a value: (b value: x) ]`
+### `a <|> b`
+If the left argument is binary, this is the Psi or 'over' operator and `a <|> b` is equivalent to `[:x :y | a value: (b value: x) value: (b value: y) ]`.
+Otherwise this is the B1 or 'atop' operator and `a <|> b` is equivalent to `[:x :y | a value: (b value: x value: y) ]`
+### `a <*> b`
+This is the backHook or the S combinator, depending on the arity of the right argument. `a <*> b` is equivalent to either `[:x| b value: (a value: x) value: x]` or `[:x| a value: x value: (b value: x)]`
+### `a <-> b`
+This is the D combinator also known as the Dove bird. Depending on the arity of the left argument, `a <-> b` is equivalent to either `[:x :y| a value: x value: (b value: y) ]` or `[:x :y| b value: (a value: x) value: y ]`
+### `a fold`
+This is the fold operator. It returns a block that acts like putting the operator between elements of the argument collection on the right.
+### `a scan`
+This is the scan operator. It returns a block that acts like putting the operator between elements of the argument collection on the right like `fold` but returns a collection.
+### Examples
+`& </> <| (#sorted <|> #=)` tests if a parameter is already sorted
 
 # Loading
 To load, in a Pharo9 image Playground do:
