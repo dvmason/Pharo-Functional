@@ -225,7 +225,7 @@ This is the fold operator. It returns a block that acts like putting the operato
 ### `a scan`
 This is the scan operator. It returns a block that acts like putting the operator between elements of the argument collection on the right like `fold` but returns a collection.
 ### Examples
-`& fold <| (#sorted <|> #=)` tests if a parameter is already sorted
+`#sorted <|> #=` tests if a parameter is already sorted
 
 # Loading
 To load, in a Pharo9 image Playground do:
