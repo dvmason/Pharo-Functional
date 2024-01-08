@@ -33,7 +33,7 @@ BlockClosure >> <| aFullBlockClosure [
 ]
 
 { #category : #'*PharoFunctional' }
-Symbol >> <|> aBlock [
+BlockClosure >> <|> aBlock [
    | a b |
    a := self numArgsAsBlock.
    b := aBlock numArgsAsBlock.
