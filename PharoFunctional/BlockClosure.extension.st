@@ -15,7 +15,6 @@ BlockClosure >> <*> aBlock [
 
 { #category : #'*PharoFunctional' }
 BlockClosure >> <-> aBlock [
-
 	| a b |
 	a := self numArgsAsBlock.
 	b := aBlock numArgsAsBlock.
@@ -31,6 +30,20 @@ BlockClosure >> <| aFullBlockClosure [
        aFullBlockClosure numArgsAsBlock = 1) ifFalse: [ 
       ^ ArityError signal ].
    ^ [ :x | self value: (aFullBlockClosure value: x) ]
+]
+
+{ #category : #'*PharoFunctional' }
+BlockClosure >> <|> aBlock [
+   | a b |
+   a := self numArgsAsBlock.
+   b := aBlock numArgsAsBlock.
+   (a + b = 3 and: (a min: b) > 0) ifFalse: [ ^ ArityError signal ].
+   "Psi or 'over'"
+   a = 2 ifTrue: [ 
+      ^ [ :x :y | 
+        self value: (aBlock value: x) value: (aBlock value: y) ] ].
+   "B1 or 'atop'"
+   ^ [ :x :y | self value: (aBlock value: x value: y) ]
 ]
 
 { #category : #'*PharoFunctional' }
