@@ -34,6 +34,12 @@ BlockClosure >> <| aFullBlockClosure [
 ]
 
 { #category : #'*PharoFunctional' }
+BlockClosure >> curry [
+	BlockClosureCurryable adoptInstance: self.
+	^ self
+]
+
+{ #category : #'*PharoFunctional' }
 BlockClosure >> curry: anObject [
 	^ [: left |  self value: left value: anObject ]
 ]

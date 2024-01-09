@@ -22,6 +22,35 @@ Slice >> add: newObject [
 	^ self errorImproperStore
 ]
 
+{ #category : #initialization }
+Slice >> allButFirst: n [
+
+	^ self class new
+		  collection: collection
+		  offset: offset + direction
+		  size: size - 1
+		  direction: direction
+		  mutable: mutable
+]
+
+{ #category : #initialization }
+Slice >> allButLast: n [
+
+	^ self class new
+		  collection: collection
+		  offset: offset
+		  size: size - 1
+		  direction: direction
+		  mutable: mutable
+]
+
+{ #category : #converting }
+Slice >> asString [
+
+	self species == ByteString ifFalse: [ ^ super asString ].
+	^ self collect: [ :x | x ]
+]
+
 { #category : #accessing }
 Slice >> at: index [
 
@@ -42,17 +71,21 @@ Slice >> at: index put: data [
 { #category : #initialization }
 Slice >> collection: aCollection from: anInteger to: anInteger3 [
 
+	^ self
+		  collection: aCollection
+		  offset: anInteger - 1
+		  size: anInteger3 - anInteger + 1
+		  direction: 1
+		  mutable: false
+]
+
+{ #category : #private }
+Slice >> collection: aCollection offset: theOffset size: theSize direction: theDirection mutable: mutability [
 	collection := aCollection.
-	anInteger < anInteger3
-		ifTrue: [ 
-			offset := anInteger - 1.
-			size := anInteger3 - anInteger + 1.
-			direction := 1 ]
-		ifFalse: [ 
-			offset := anInteger + 1.
-			size := anInteger - anInteger3 + 1.
-			direction := -1 ].
-	mutable := false
+	offset := theOffset.
+	size := theSize.
+	direction := theDirection.
+	mutable := mutability
 ]
 
 { #category : #initialization }
@@ -63,10 +96,12 @@ Slice >> mutable [
 { #category : #converting }
 Slice >> reversed [
 
-	| rev |
-	rev := self class new collection: collection from: size*direction+offset to: offset+1.
-	mutable ifTrue: [ rev mutable ].
-	^ rev
+	^ self class new
+		  collection: collection
+		  offset: (size + 1) * direction + offset
+		  size: size
+		  direction: direction negated
+		  mutable: mutable
 ]
 
 { #category : #accessing }
@@ -77,5 +112,6 @@ Slice >> size [
 
 { #category : #private }
 Slice >> species [
-	^ Array
+
+	^ collection species
 ]

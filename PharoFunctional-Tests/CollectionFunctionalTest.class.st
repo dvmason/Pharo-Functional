@@ -56,6 +56,27 @@ CollectionFunctionalTest >> testSlice [
 ]
 
 { #category : #tests }
+CollectionFunctionalTest >> testSliceString [
+
+	| slice |
+	slice := ('abcdefgh' collect: #yourself) sliceFrom: 2 to: 5.
+	self assert: (slice collect: #asUppercase) equals: 'BCDE'.
+	self assert: slice size equals: 4.
+	self should: [ slice at: 3 put: $Z ] raise: Error.
+	slice mutable.
+	slice at: 3 put: $Z.
+	self assert: slice reversed asString equals: 'eZcb'.
+	slice reversed at: 3 put: $X.
+	self assert: slice asString equals: 'bXZe'.
+	self should: [ slice at: 0 put: $. ] raise: Error.
+	self should: [ slice at: 5 put: $. ] raise: Error.
+	self assert: (slice sliceFrom: 2 to: 3) asString equals: 'XZ'.
+	self assert: (slice sliceFrom: 2 to: 1) size equals: 0.
+	self assert: (slice allButFirst) asString equals: 'XZe'.
+	self assert: (slice allButLast) asString equals: 'bXZ'
+]
+
+{ #category : #tests }
 CollectionFunctionalTest >> testValueValue [
 	self assert: (#(1 2 3 4) with: #(2 4 6 8) collect: #+) equals: #(3 6 9 12).
 	self assert: (#(1 2 3 4) with: #(2 4 6 8) collect: #bitOr:) equals: #(3 6 7 12).

@@ -102,6 +102,24 @@ FunctionalTest >> testCurry [
 ]
 
 { #category : #tests }
+FunctionalTest >> testCurry2 [
+
+	| addArrays |
+	addArrays := #+ curry: #map:map:.
+	self
+		assert: (addArrays value: #( 1 2 3 ) value: #( -1 0 1 ))
+		equals: #( 0 2 4 ) 
+]
+
+{ #category : #tests }
+FunctionalTest >> testCurry3 [
+
+	self
+		assert: (([:x :y| x+y ] curry value: 4) value: 3)
+		equals: 7
+]
+
+{ #category : #tests }
 FunctionalTest >> testCycle [
    self assert: (#(1 2 3 4) cycle: 2)  equals: #(1 2).
    self assert: (#(1 2 3 4) cycle: 3)  equals: #(1 2 3).
