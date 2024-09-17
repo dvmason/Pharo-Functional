@@ -1,5 +1,5 @@
 # CompileWithCompose
-This is an alternate compiler built on top of Pharo's Opal compiler. It can be the compiler of choice for any class. All of the syntax proposed here is otherwise syntax errors that can be recognized by this compiler and turned into legal Pharo Smalltalk. However, the source would still contain these syntax elements... only the internal AST is affected. Only if you lost your source code and recovered it from reverse-compilation would you lose the syntactic forms.
+This is an alternate compiler built on top of Pharo's Opal compiler. It can be the compiler of choice for any class. All of the syntax proposed here is otherwise syntax errors that can be recognized by this compiler and turned into legal Pharo Smalltalk. However, the source would still contain these syntax elements... only the internal AST is affected. Only if you lost your source code and recovered it from reverse-compilation you would lose the syntactic forms.
 
 ## Already implemented syntax extensions
 
